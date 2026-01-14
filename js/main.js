@@ -29,19 +29,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 导航栏滚动效果
     let lastScroll = 0;
-    const navbar = document.querySelector('.navbar');
+    // 尝试查找导航栏元素（支持多种选择器）
+    const navbar = document.querySelector('.navbar') || 
+                   document.querySelector('.site-header') ||
+                   document.querySelector('header');
     
-    window.addEventListener('scroll', function() {
-        const currentScroll = window.pageYOffset;
-        
-        if (currentScroll > 100) {
-            navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-        } else {
-            navbar.style.boxShadow = '0 1px 2px 0 rgba(0, 0, 0, 0.05)';
-        }
-        
-        lastScroll = currentScroll;
-    });
+    if (navbar) {
+        window.addEventListener('scroll', function() {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.boxShadow = '0 1px 2px 0 rgba(0, 0, 0, 0.05)';
+            }
+            
+            lastScroll = currentScroll;
+        }, { passive: true }); // 添加被动监听器以提高性能
+    }
 
     // 数字动画效果
     const animateValue = (element, start, end, duration) => {
@@ -81,9 +86,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
 
-    // 观察所有统计项
-    document.querySelectorAll('.stat-item').forEach(item => {
-        observer.observe(item);
-    });
+    // 观察所有统计项（如果存在）
+    const statItems = document.querySelectorAll('.stat-item');
+    if (statItems.length > 0) {
+        statItems.forEach(item => {
+            observer.observe(item);
+        });
+    }
 });
 

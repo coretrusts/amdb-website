@@ -157,7 +157,13 @@ print("\\n💡 版本管理支持完整的区块链状态历史！")`
 
 // 初始化CodeMirror编辑器
 function initEditor() {
-    editor = CodeMirror(document.getElementById('codeEditor'), {
+    const editorElement = document.getElementById('codeEditor');
+    if (!editorElement) {
+        console.error('Code editor element not found');
+        return;
+    }
+    
+    editor = CodeMirror(editorElement, {
         value: examples.basic,
         mode: 'python',
         theme: 'monokai',
@@ -165,8 +171,24 @@ function initEditor() {
         indentUnit: 4,
         indentWithTabs: false,
         lineWrapping: true,
-        autofocus: true
+        autofocus: true,
+        // 配置以改善性能警告
+        inputStyle: 'contenteditable',
+        spellcheck: false
     });
+    
+    // 尝试修复被动事件监听器警告（CodeMirror内部问题，只能缓解）
+    try {
+        const wrapper = editor.getWrapperElement();
+        if (wrapper) {
+            // 为触摸事件添加被动监听器
+            ['touchstart', 'touchmove'].forEach(eventType => {
+                wrapper.addEventListener(eventType, () => {}, { passive: true });
+            });
+        }
+    } catch (e) {
+        // 忽略错误
+    }
 }
 
 // 初始化Pyodide和AmDb WASM
