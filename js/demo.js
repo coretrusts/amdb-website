@@ -319,13 +319,20 @@ from amdb import Database  # 兼容导入
         // 执行AmDb代码
         pyodide.runPython(amdbCode);
         
-        // 创建全局Database引用
+        // 创建amdb模块和Database引用
         pyodide.runPython(`
-# 为了兼容性，创建Database别名
-try:
-    from amdb import Database
-except:
-    Database = DatabaseWASM
+# 创建amdb模块
+import sys
+import types
+
+# 创建amdb模块
+amdb_module = types.ModuleType('amdb')
+amdb_module.DatabaseWASM = DatabaseWASM
+amdb_module.Database = DatabaseWASM
+sys.modules['amdb'] = amdb_module
+
+# 为了兼容性，创建全局Database引用
+Database = DatabaseWASM
         `);
         
     } catch (error) {
