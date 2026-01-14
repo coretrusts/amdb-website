@@ -1,0 +1,17 @@
+# robots.txt for getamdb.com
+
+User-agent: *
+Allow: /
+Disallow: /downloads/
+Disallow: /images/
+
+# Sitemap location
+Sitemap: https://getamdb.com/sitemap.xml
+
+# Crawl-delay for specific bots (optional)
+User-agent: Googlebot
+Crawl-delay: 0
+
+User-agent: Bingbot
+Crawl-delay: 0
+
