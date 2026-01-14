@@ -389,7 +389,27 @@ value = db.get(<span class="code-string">b'key1'</span>)</code></pre>
 
     <script src="js/main.js"></script>
     <script src="js/menu-toggle.js"></script>
-    <script src="js/mobile.js"></script>    
+    <script>
+    // 内联菜单切换函数（确保可用）
+    if (typeof toggleMobileMenu === "undefined") {
+        function toggleMobileMenu(e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            const nav = document.querySelector(.header-nav);
+            const toggle = document.querySelector(.mobile-menu-toggle);
+            if (!nav || !toggle) { console.warn(菜单元素未找到); return; }
+            const isActive = nav.classList.contains(active);
+            if (isActive) {
+                nav.classList.remove(active); toggle.classList.remove(active);
+                nav.style.maxHeight = 0; nav.style.overflow = hidden; nav.style.opacity = 0; nav.style.visibility = hidden;
+            } else {
+                nav.classList.add(active); toggle.classList.add(active);
+                const height = nav.scrollHeight || 500;
+                nav.style.maxHeight = height + px; nav.style.overflow = visible; nav.style.opacity = 1; nav.style.visibility = visible;
+            }
+            console.log(菜单切换:, nav.classList.contains(active));
+        }
+    }
+    </script>    <script src="js/mobile.js"></script>    
     <!-- Structured Data (JSON-LD) for SEO -->
     <script type="application/ld+json">
     {
