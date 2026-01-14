@@ -191,7 +191,7 @@
                     <li><a href="https://github.com/coretrusts/amdb" class="nav-link nav-link-external" target="_blank">GitHub</a></li>
                 </ul>
             </nav>
-            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+            <button class="mobile-menu-toggle" aria-label="Toggle menu" onclick="toggleMobileMenu(event)">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -415,6 +415,23 @@ value = db.get(<span class="string">b'key'</span>)</code></pre>
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="js/menu-toggle.js"></script>
     <script src="js/mobile.js"></script></body>
-</html>
+    <script>
+    function toggleMobileMenu(e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        const nav = document.querySelector(.header-nav);
+        const toggle = document.querySelector(.mobile-menu-toggle);
+        if (!nav || !toggle) return;
+        const isActive = nav.classList.contains(active);
+        if (isActive) {
+            nav.classList.remove(active); toggle.classList.remove(active);
+            nav.style.maxHeight = 0; nav.style.overflow = hidden; nav.style.opacity = 0; nav.style.visibility = hidden;
+        } else {
+            nav.classList.add(active); toggle.classList.add(active);
+            const height = nav.scrollHeight || 500;
+            nav.style.maxHeight = height + px; nav.style.overflow = visible; nav.style.opacity = 1; nav.style.visibility = visible;
+        }
+    }
+    </script></html>
 
