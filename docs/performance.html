@@ -6,225 +6,370 @@
     <meta name="description" content="AmDb性能优化指南 - 性能调优和最佳实践">
     <title>性能优化 - AmDb</title>
     <link rel="stylesheet" href="../css/style.css">
-    <style>
-        .doc-content {
+        <style>
+        .doc-page {
+            padding: var(--space-3xl) 0;
+            background: var(--bg-primary);
+        }
+        
+        .doc-container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 2rem 0;
+            padding: 0 var(--space-lg);
         }
-        .doc-content h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        
+        .doc-header {
+            margin-bottom: var(--space-2xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 1px solid var(--border-color);
         }
-        .doc-content h2 {
-            font-size: 1.75rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 0.5rem;
+        
+        .doc-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--space-sm);
+            color: var(--text-primary);
+            letter-spacing: -1px;
         }
-        .doc-content h3 {
-            font-size: 1.25rem;
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
+        
+        .doc-intro {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
-        .doc-content p {
-            margin-bottom: 1rem;
+        
+        .doc-content {
             line-height: 1.8;
         }
-        .performance-tip {
-            background: var(--bg-light);
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid var(--success-color);
+        
+        .doc-content h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-top: var(--space-2xl);
+            margin-bottom: var(--space-md);
+            color: var(--text-primary);
+            padding-bottom: var(--space-xs);
+            border-bottom: 2px solid var(--border-color);
         }
-        .performance-tip h3 {
-            margin-top: 0;
-            color: var(--success-color);
+        
+        .doc-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: var(--space-xl);
+            margin-bottom: var(--space-sm);
+            color: var(--text-primary);
         }
+        
+        .doc-content p {
+            margin-bottom: var(--space-md);
+            color: var(--text-secondary);
+        }
+        
+        .doc-content ul,
+        .doc-content ol {
+            margin-bottom: var(--space-md);
+            padding-left: var(--space-xl);
+            color: var(--text-secondary);
+        }
+        
+        .doc-content li {
+            margin-bottom: var(--space-xs);
+        }
+        
+        .doc-content a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .doc-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .code-block {
+            background: var(--gray-900);
+            border-radius: var(--border-radius);
+            padding: var(--space-lg);
+            margin: var(--space-md) 0;
+            overflow-x: auto;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--gray-100);
+        }
+        
+        .code-block .keyword {
+            color: #c792ea;
+        }
+        
+        .code-block .string {
+            color: #c3e88d;
+        }
+        
+        .code-block .comment {
+            color: var(--gray-500);
+            font-style: italic;
+        }
+        
         .benchmark-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 1rem 0;
+            margin: var(--space-md) 0;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
         }
+        
         .benchmark-table th,
         .benchmark-table td {
-            padding: 0.75rem;
+            padding: var(--space-sm) var(--space-md);
             text-align: left;
             border-bottom: 1px solid var(--border-color);
         }
+        
         .benchmark-table th {
-            background: var(--bg-light);
+            background: var(--bg-secondary);
             font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .benchmark-table td {
+            color: var(--text-secondary);
+        }
+        
+        .benchmark-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .integration-example,
+        .performance-tip {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-xl);
+            margin-bottom: var(--space-lg);
+            transition: var(--transition);
+        }
+        
+        .integration-example:hover,
+        .performance-tip:hover {
+            box-shadow: var(--shadow-sm);
+            border-color: var(--primary);
+        }
+        
+        .doc-nav {
+            margin-top: var(--space-2xl);
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .doc-nav-links {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        .doc-nav-link {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-sm) var(--space-md);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .doc-nav-link:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
         }
     </style>
 </head>
-<body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <a href="../index.html">
-                    <span class="logo">AmDb</span>
-                    <span class="tagline">高性能区块链数据库</span>
+<body>        <header class="site-header">
+        <div class="header-container">
+            <div class="header-brand">
+                <a href="../index.html" class="brand-link">
+                    <span class="brand-logo">AmDb</span>
                 </a>
             </div>
-            <ul class="nav-menu">
-                <li><a href="../index.html">首页</a></li>
-                <li><a href="../index.html#features">特性</a></li>
-                <li><a href="../index.html#docs" class="active">文档</a></li>
-                <li><a href="../index.html#downloads">下载</a></li>
-                <li><a href="../index.html#community">社区</a></li>
-                <li><a href="https://github.com/coretrusts/amdb" target="_blank">GitHub</a></li>
-            </ul>
-            <button class="nav-toggle" aria-label="Toggle navigation">
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li><a href="../index.html" class="nav-link">首页</a></li>
+                    <li><a href="../index.html#features" class="nav-link">特性</a></li>
+                    <li><a href="../index.html#docs" class="nav-link active">文档</a></li>
+                    <li><a href="../index.html#downloads" class="nav-link">下载</a></li>
+                    <li><a href="https://github.com/coretrusts/amdb" class="nav-link nav-link-external" target="_blank">GitHub</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
         </div>
-    </nav>
+    </header>
 
-    <div class="container">
-        <div class="doc-content">
-            <h1>性能优化</h1>
-            <p>AmDb性能优化指南和最佳实践。</p>
+    <main class="doc-page">
+        <div class="doc-container">
+            <div class="doc-header">
+                <h1 class="doc-title">性能优化</h1>
+                <p class="doc-intro">AmDb性能优化指南和最佳实践。</p>
+            </div>
+            
+            <div class="doc-content">
+                <h2>性能基准</h2>
+                <table class="benchmark-table">
+                    <thead>
+                        <tr>
+                            <th>操作类型</th>
+                            <th>性能</th>
+                            <th>目标</th>
+                            <th>达成率</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>顺序写入</td>
+                            <td>100,000+ ops/s</td>
+                            <td>550,000 ops/s</td>
+                            <td>18%</td>
+                        </tr>
+                        <tr>
+                            <td>随机写入</td>
+                            <td>8,000+ ops/s</td>
+                            <td>52,000 ops/s</td>
+                            <td>15%</td>
+                        </tr>
+                        <tr>
+                            <td>随机读取</td>
+                            <td>280,000+ ops/s</td>
+                            <td>156,000 ops/s</td>
+                            <td>180%</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-            <h2>性能基准</h2>
-            <table class="benchmark-table">
-                <thead>
-                    <tr>
-                        <th>操作类型</th>
-                        <th>性能</th>
-                        <th>目标</th>
-                        <th>达成率</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>顺序写入</td>
-                        <td>100,000+ ops/s</td>
-                        <td>550,000 ops/s</td>
-                        <td>18%</td>
-                    </tr>
-                    <tr>
-                        <td>随机写入</td>
-                        <td>8,000+ ops/s</td>
-                        <td>52,000 ops/s</td>
-                        <td>15%</td>
-                    </tr>
-                    <tr>
-                        <td>随机读取</td>
-                        <td>280,000+ ops/s</td>
-                        <td>156,000 ops/s</td>
-                        <td>180%</td>
-                    </tr>
-                </tbody>
-            </table>
+                <h2>优化建议</h2>
 
-            <h2>优化建议</h2>
-
-            <div class="performance-tip">
-                <h3>1. 使用批量写入</h3>
-                <p>批量写入比单个写入性能高数倍，建议使用batch_put()方法。</p>
-                <div class="code-block">
-                    <pre><code># 推荐：批量写入
-items = [(b'key1', b'value1'), (b'key2', b'value2'), ...]
+                <div class="performance-tip">
+                    <h3>1. 使用批量写入</h3>
+                    <p>批量写入比单个写入性能高数倍，建议使用batch_put()方法。</p>
+                    <div class="code-block">
+                        <pre><code><span class="comment"># 推荐：批量写入</span>
+items = [(<span class="string">b'key1'</span>, <span class="string">b'value1'</span>), (<span class="string">b'key2'</span>, <span class="string">b'value2'</span>), ...]
 db.batch_put(items)
 
-# 不推荐：单个写入
-for key, value in items:
+<span class="comment"># 不推荐：单个写入</span>
+<span class="keyword">for</span> key, value <span class="keyword">in</span> items:
     db.put(key, value)</code></pre>
+                    </div>
                 </div>
-            </div>
 
-            <div class="performance-tip">
-                <h3>2. 合理配置批量大小</h3>
-                <p>在amdb.ini中配置batch_max_size，建议设置为1000-5000。</p>
-                <div class="code-block">
-                    <pre><code>[batch]
-max_size = 5000  # 批量大小，影响写入性能</code></pre>
+                <div class="performance-tip">
+                    <h3>2. 合理配置批量大小</h3>
+                    <p>在amdb.ini中配置batch_max_size，建议设置为1000-5000。</p>
+                    <div class="code-block">
+                        <pre><code>[batch]
+max_size = 5000  <span class="comment"># 批量大小，影响写入性能</span></code></pre>
+                    </div>
                 </div>
-            </div>
 
-            <div class="performance-tip">
-                <h3>3. 异步刷新策略</h3>
-                <p>对于非关键数据，可以使用异步刷新，提升写入性能。</p>
-                <div class="code-block">
-                    <pre><code># 异步刷新（性能优先）
+                <div class="performance-tip">
+                    <h3>3. 异步刷新策略</h3>
+                    <p>对于非关键数据，可以使用异步刷新，提升写入性能。</p>
+                    <div class="code-block">
+                        <pre><code><span class="comment"># 异步刷新（性能优先）</span>
 db.flush(async_mode=True)
 
-# 同步刷新（数据安全优先）
+<span class="comment"># 同步刷新（数据安全优先）</span>
 db.flush(force_sync=True)</code></pre>
+                    </div>
                 </div>
-            </div>
 
-            <div class="performance-tip">
-                <h3>4. 启用多线程</h3>
-                <p>在配置文件中启用多线程支持，提升并发性能。</p>
-                <div class="code-block">
-                    <pre><code>[threading]
+                <div class="performance-tip">
+                    <h3>4. 启用多线程</h3>
+                    <p>在配置文件中启用多线程支持，提升并发性能。</p>
+                    <div class="code-block">
+                        <pre><code>[threading]
 enable = true
 max_workers = 4
 enable_parallel_batch = true</code></pre>
+                    </div>
                 </div>
-            </div>
 
-            <div class="performance-tip">
-                <h3>5. 优化版本管理</h3>
-                <p>对于大批量写入，可以跳过prev_hash计算以提升性能。</p>
+                <div class="performance-tip">
+                    <h3>5. 优化版本管理</h3>
+                    <p>对于大批量写入，可以跳过prev_hash计算以提升性能。</p>
+                    <div class="code-block">
+                        <pre><code>[version]
+skip_prev_hash_threshold = 200  <span class="comment"># 超过此阈值跳过prev_hash计算</span></code></pre>
+                    </div>
+                </div>
+
+                <h2>性能测试</h2>
                 <div class="code-block">
-                    <pre><code>[version]
-skip_prev_hash_threshold = 200  # 超过此阈值跳过prev_hash计算</code></pre>
-                </div>
-            </div>
-
-            <h2>性能测试</h2>
-            <div class="code-block">
-                <pre><code># 运行性能测试
+                    <pre><code><span class="comment"># 运行性能测试</span>
 python tests/performance_benchmark.py
 
-# 运行压力测试
+<span class="comment"># 运行压力测试</span>
 python tests/stress_test.py</code></pre>
-            </div>
-
-            <h2>更多信息</h2>
-            <ul>
-                <li><a href="quickstart.html">快速开始</a></li>
-                <li><a href="api.html">API文档</a></li>
-                <li><a href="integration.html">集成指南</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>AmDb</h4>
-                    <p>专为区块链设计的高性能数据库系统</p>
                 </div>
-                <div class="footer-section">
-                    <h4>资源</h4>
-                    <ul>
+
+                <h2>更多信息</h2>
+                <ul>
+                    <li><a href="quickstart.html">快速开始</a></li>
+                    <li><a href="api.html">API文档</a></li>
+                    <li><a href="integration.html">集成指南</a></li>
+                </ul>
+            </div>
+            
+            <div class="doc-nav">
+                <div class="doc-nav-links">
+                    <a href="quickstart.html" class="doc-nav-link">← 快速开始</a>
+                    <a href="api.html" class="doc-nav-link">← API参考</a>
+                    <a href="integration.html" class="doc-nav-link">← 集成指南</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+        <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4 class="footer-title">AmDb</h4>
+                    <p class="footer-text">专为区块链设计的高性能数据库系统</p>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">资源</h4>
+                    <ul class="footer-links">
                         <li><a href="quickstart.html">快速开始</a></li>
                         <li><a href="api.html">API文档</a></li>
                         <li><a href="../index.html#downloads">下载</a></li>
                         <li><a href="https://github.com/coretrusts/amdb">GitHub</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h4>社区</h4>
-                    <ul>
+                <div class="footer-column">
+                    <h4 class="footer-title">社区</h4>
+                    <ul class="footer-links">
                         <li><a href="https://github.com/coretrusts/amdb/discussions">讨论区</a></li>
                         <li><a href="https://github.com/coretrusts/amdb/issues">问题反馈</a></li>
                         <li><a href="https://github.com/coretrusts/amdb/blob/main/CONTRIBUTING.md">贡献指南</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h4>关于</h4>
-                    <ul>
+                <div class="footer-column">
+                    <h4 class="footer-title">关于</h4>
+                    <ul class="footer-links">
                         <li><a href="https://github.com/coretrusts/amdb/blob/main/LICENSE">许可证</a></li>
                         <li><a href="https://github.com/coretrusts/amdb/releases">更新日志</a></li>
                     </ul>
@@ -235,8 +380,6 @@ python tests/stress_test.py</code></pre>
             </div>
         </div>
     </footer>
-
-    <script src="../js/main.js"></script>
 </body>
 </html>
 

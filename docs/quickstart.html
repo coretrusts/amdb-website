@@ -3,151 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AmDb快速开始指南 - 5分钟上手AmDb数据库">
     <title>快速开始 - AmDb</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        .doc-content {
+        .doc-page {
+            padding: var(--space-3xl) 0;
+            background: var(--bg-primary);
+        }
+        
+        .doc-container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 2rem 0;
+            padding: 0 var(--space-lg);
         }
-        .doc-content h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        
+        .doc-header {
+            margin-bottom: var(--space-2xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 1px solid var(--border-color);
         }
-        .doc-content h2 {
-            font-size: 1.75rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
+        
+        .doc-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--space-sm);
+            color: var(--text-primary);
+            letter-spacing: -1px;
         }
-        .doc-content h3 {
-            font-size: 1.25rem;
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
+        
+        .doc-intro {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
-        .doc-content p {
-            margin-bottom: 1rem;
+        
+        .doc-content {
             line-height: 1.8;
         }
-        .doc-content ul, .doc-content ol {
-            margin-bottom: 1rem;
-            padding-left: 2rem;
+        
+        .doc-content h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-top: var(--space-2xl);
+            margin-bottom: var(--space-md);
+            color: var(--text-primary);
+            padding-bottom: var(--space-xs);
+            border-bottom: 2px solid var(--border-color);
         }
+        
+        .doc-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: var(--space-xl);
+            margin-bottom: var(--space-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content p {
+            margin-bottom: var(--space-md);
+            color: var(--text-secondary);
+        }
+        
+        .doc-content ul,
+        .doc-content ol {
+            margin-bottom: var(--space-md);
+            padding-left: var(--space-xl);
+            color: var(--text-secondary);
+        }
+        
         .doc-content li {
-            margin-bottom: 0.5rem;
+            margin-bottom: var(--space-xs);
+        }
+        
+        .doc-content a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .doc-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .code-block {
+            background: var(--gray-900);
+            border-radius: var(--border-radius);
+            padding: var(--space-lg);
+            margin: var(--space-md) 0;
+            overflow-x: auto;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--gray-100);
+        }
+        
+        .code-block code {
+            color: var(--gray-100);
+        }
+        
+        .code-block .keyword {
+            color: #c792ea;
+        }
+        
+        .code-block .string {
+            color: #c3e88d;
+        }
+        
+        .code-block .comment {
+            color: var(--gray-500);
+            font-style: italic;
+        }
+        
+        .doc-nav {
+            margin-top: var(--space-2xl);
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .doc-nav-links {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        .doc-nav-link {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-sm) var(--space-md);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .doc-nav-link:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <a href="../index.html">
-                    <span class="logo">AmDb</span>
-                    <span class="tagline">高性能区块链数据库</span>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-brand">
+                <a href="../index.html" class="brand-link">
+                    <span class="brand-logo">AmDb</span>
                 </a>
             </div>
-            <ul class="nav-menu">
-                <li><a href="../index.html">首页</a></li>
-                <li><a href="../index.html#features">特性</a></li>
-                <li><a href="../index.html#docs" class="active">文档</a></li>
-                <li><a href="../index.html#downloads">下载</a></li>
-                <li><a href="../index.html#community">社区</a></li>
-            </ul>
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li><a href="../index.html" class="nav-link">首页</a></li>
+                    <li><a href="../index.html#features" class="nav-link">特性</a></li>
+                    <li><a href="../index.html#docs" class="nav-link active">文档</a></li>
+                    <li><a href="../index.html#downloads" class="nav-link">下载</a></li>
+                    <li><a href="https://github.com/coretrusts/amdb" class="nav-link nav-link-external" target="_blank">GitHub</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-    </nav>
+    </header>
 
-    <div class="container">
-        <div class="doc-content">
-            <h1>快速开始</h1>
-            <p>本指南将帮助您在5分钟内开始使用AmDb数据库。</p>
-
-            <h2>安装</h2>
-            <h3>使用 pip 安装</h3>
-            <div class="code-block">
-                <pre><code>pip install amdb</code></pre>
+    <main class="doc-page">
+        <div class="doc-container">
+            <div class="doc-header">
+                <h1 class="doc-title">快速开始</h1>
+                <p class="doc-intro">本指南将帮助您在5分钟内开始使用AmDb数据库。</p>
             </div>
+            
+            <div class="doc-content">
+                <h2>安装</h2>
+                
+                <h3>使用 pip 安装</h3>
+                <div class="code-block">
+                    <pre><code>pip install amdb</code></pre>
+                </div>
 
-            <h3>从源码安装</h3>
-            <div class="code-block">
-                <pre><code>git clone https://github.com/coretrusts/amdb.git
+                <h3>从源码安装</h3>
+                <div class="code-block">
+                    <pre><code>git clone https://github.com/coretrusts/amdb.git
 cd amdb
 python setup.py install</code></pre>
-            </div>
+                </div>
 
-            <h2>基本使用</h2>
-            <h3>创建数据库</h3>
-            <div class="code-block">
-                <pre><code>from amdb import Database
+                <h2>基本使用</h2>
+                
+                <h3>创建数据库</h3>
+                <div class="code-block">
+                    <pre><code><span class="keyword">from</span> amdb <span class="keyword">import</span> Database
 
-# 创建数据库实例
-db = Database(data_dir='./data/mydb')
+<span class="comment"># 创建数据库实例</span>
+db = Database(data_dir=<span class="string">'./data/mydb'</span>)
 
-# 写入数据
-db.put(b'key1', b'value1')
-db.put(b'key2', b'value2')
+<span class="comment"># 写入数据</span>
+db.put(<span class="string">b'key1'</span>, <span class="string">b'value1'</span>)
+db.put(<span class="string">b'key2'</span>, <span class="string">b'value2'</span>)
 
-# 读取数据
-value = db.get(b'key1')
-print(value)  # b'value1'
+<span class="comment"># 读取数据</span>
+value = db.get(<span class="string">b'key1'</span>)
+print(value)  <span class="comment"># b'value1'</span>
 
-# 批量写入
-items = [(b'key3', b'value3'), (b'key4', b'value4')]
+<span class="comment"># 批量写入</span>
+items = [(<span class="string">b'key3'</span>, <span class="string">b'value3'</span>), (<span class="string">b'key4'</span>, <span class="string">b'value4'</span>)]
 db.batch_put(items)
 
-# 刷新到磁盘
+<span class="comment"># 刷新到磁盘</span>
 db.flush()</code></pre>
-            </div>
+                </div>
 
-            <h2>使用CLI工具</h2>
-            <div class="code-block">
-                <pre><code># 启动CLI
+                <h2>使用CLI工具</h2>
+                <div class="code-block">
+                    <pre><code><span class="comment"># 启动CLI</span>
 amdb-cli
 
-# 在CLI中
+<span class="comment"># 在CLI中</span>
 amdb> connect mydb
 amdb [mydb]> put key1 value1
 amdb [mydb]> get key1
 amdb [mydb]> show keys</code></pre>
-            </div>
-
-            <h2>下一步</h2>
-            <ul>
-                <li><a href="api.html">查看API文档</a></li>
-                <li><a href="integration.html">了解如何集成到区块链项目</a></li>
-                <li><a href="performance.html">性能优化指南</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>AmDb</h4>
-                    <p>专为区块链设计的高性能数据库系统</p>
                 </div>
-                <div class="footer-section">
-                    <h4>资源</h4>
-                    <ul>
+
+                <h2>下一步</h2>
+                <ul>
+                    <li><a href="api.html">查看API文档</a></li>
+                    <li><a href="integration.html">了解如何集成到区块链项目</a></li>
+                    <li><a href="performance.html">性能优化指南</a></li>
+                </ul>
+            </div>
+            
+            <div class="doc-nav">
+                <div class="doc-nav-links">
+                    <a href="api.html" class="doc-nav-link">→ API参考</a>
+                    <a href="integration.html" class="doc-nav-link">→ 集成指南</a>
+                    <a href="performance.html" class="doc-nav-link">→ 性能优化</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4 class="footer-title">AmDb</h4>
+                    <p class="footer-text">专为区块链设计的高性能数据库系统</p>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">资源</h4>
+                    <ul class="footer-links">
                         <li><a href="quickstart.html">快速开始</a></li>
                         <li><a href="api.html">API文档</a></li>
                         <li><a href="../index.html#downloads">下载</a></li>
                         <li><a href="https://github.com/coretrusts/amdb">GitHub</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h4>社区</h4>
-                    <ul>
+                <div class="footer-column">
+                    <h4 class="footer-title">社区</h4>
+                    <ul class="footer-links">
                         <li><a href="https://github.com/coretrusts/amdb/discussions">讨论区</a></li>
                         <li><a href="https://github.com/coretrusts/amdb/issues">问题反馈</a></li>
                         <li><a href="https://github.com/coretrusts/amdb/blob/main/CONTRIBUTING.md">贡献指南</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h4>关于</h4>
-                    <ul>
+                <div class="footer-column">
+                    <h4 class="footer-title">关于</h4>
+                    <ul class="footer-links">
                         <li><a href="https://github.com/coretrusts/amdb/blob/main/LICENSE">许可证</a></li>
                         <li><a href="https://github.com/coretrusts/amdb/releases">更新日志</a></li>
                     </ul>
@@ -162,4 +295,3 @@ amdb [mydb]> show keys</code></pre>
     <script src="../js/main.js"></script>
 </body>
 </html>
-

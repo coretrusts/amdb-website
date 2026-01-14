@@ -7,288 +7,390 @@
     <title>API参考 - AmDb</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        .doc-content {
+        .doc-page {
+            padding: var(--space-3xl) 0;
+            background: var(--bg-primary);
+        }
+        
+        .doc-container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 2rem 0;
+            padding: 0 var(--space-lg);
         }
-        .doc-content h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        
+        .doc-header {
+            margin-bottom: var(--space-2xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 1px solid var(--border-color);
         }
+        
+        .doc-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--space-sm);
+            color: var(--text-primary);
+            letter-spacing: -1px;
+        }
+        
+        .doc-intro {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
         .doc-content h2 {
             font-size: 1.75rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
+            font-weight: 600;
+            margin-top: var(--space-2xl);
+            margin-bottom: var(--space-md);
+            color: var(--text-primary);
+            padding-bottom: var(--space-xs);
             border-bottom: 2px solid var(--border-color);
-            padding-bottom: 0.5rem;
         }
-        .doc-content h3 {
-            font-size: 1.25rem;
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
-        }
-        .doc-content p {
-            margin-bottom: 1rem;
-            line-height: 1.8;
-        }
+        
         .api-method {
-            background: var(--bg-light);
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid var(--primary-color);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-xl);
+            margin-bottom: var(--space-lg);
+            transition: var(--transition);
         }
+        
+        .api-method:hover {
+            box-shadow: var(--shadow-sm);
+            border-color: var(--primary);
+        }
+        
         .api-method h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
             margin-top: 0;
-            color: var(--primary-color);
+            margin-bottom: var(--space-sm);
+            color: var(--primary);
         }
+        
+        .api-method p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-md);
+            line-height: 1.6;
+        }
+        
         .api-params {
-            margin-top: 1rem;
+            margin-top: var(--space-md);
         }
+        
         .api-params table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 0.5rem;
+            margin-top: var(--space-sm);
         }
+        
         .api-params th,
         .api-params td {
-            padding: 0.75rem;
+            padding: var(--space-sm) var(--space-md);
             text-align: left;
             border-bottom: 1px solid var(--border-color);
         }
+        
         .api-params th {
-            background: var(--bg-light);
+            background: var(--bg-primary);
             font-weight: 600;
+            color: var(--text-primary);
         }
+        
+        .api-params td {
+            color: var(--text-secondary);
+        }
+        
         .code-example {
-            margin-top: 1rem;
+            margin-top: var(--space-md);
+        }
+        
+        .code-block {
+            background: var(--gray-900);
+            border-radius: var(--border-radius);
+            padding: var(--space-lg);
+            margin: var(--space-md) 0;
+            overflow-x: auto;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--gray-100);
+        }
+        
+        .code-block .keyword {
+            color: #c792ea;
+        }
+        
+        .code-block .string {
+            color: #c3e88d;
+        }
+        
+        .doc-nav {
+            margin-top: var(--space-2xl);
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .doc-nav-links {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        .doc-nav-link {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-sm) var(--space-md);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .doc-nav-link:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <a href="../index.html">
-                    <span class="logo">AmDb</span>
-                    <span class="tagline">高性能区块链数据库</span>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-brand">
+                <a href="../index.html" class="brand-link">
+                    <span class="brand-logo">AmDb</span>
                 </a>
             </div>
-            <ul class="nav-menu">
-                <li><a href="../index.html">首页</a></li>
-                <li><a href="../index.html#features">特性</a></li>
-                <li><a href="../index.html#docs" class="active">文档</a></li>
-                <li><a href="../index.html#downloads">下载</a></li>
-                <li><a href="../index.html#community">社区</a></li>
-                <li><a href="https://github.com/coretrusts/amdb" target="_blank">GitHub</a></li>
-            </ul>
-            <button class="nav-toggle" aria-label="Toggle navigation">
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li><a href="../index.html" class="nav-link">首页</a></li>
+                    <li><a href="../index.html#features" class="nav-link">特性</a></li>
+                    <li><a href="../index.html#docs" class="nav-link active">文档</a></li>
+                    <li><a href="../index.html#downloads" class="nav-link">下载</a></li>
+                    <li><a href="https://github.com/coretrusts/amdb" class="nav-link nav-link-external" target="_blank">GitHub</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
         </div>
-    </nav>
+    </header>
 
-    <div class="container">
-        <div class="doc-content">
-            <h1>API参考</h1>
-            <p>AmDb数据库系统的完整API参考文档。</p>
-
-            <h2>Database类</h2>
+    <main class="doc-page">
+        <div class="doc-container">
+            <div class="doc-header">
+                <h1 class="doc-title">API参考</h1>
+                <p class="doc-intro">AmDb数据库系统的完整API参考文档。</p>
+            </div>
             
-            <div class="api-method">
-                <h3>put(key, value)</h3>
-                <p>写入单个键值对。</p>
-                <div class="api-params">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>参数</th>
-                                <th>类型</th>
-                                <th>说明</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>key</td>
-                                <td>bytes</td>
-                                <td>键（字节类型）</td>
-                            </tr>
-                            <tr>
-                                <td>value</td>
-                                <td>bytes</td>
-                                <td>值（字节类型）</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="code-example">
-                    <div class="code-block">
-                        <pre><code>db = Database(data_dir='./data/mydb')
-db.put(b'key1', b'value1')</code></pre>
+            <div class="doc-content">
+                <h2>Database类</h2>
+                
+                <div class="api-method">
+                    <h3>put(key, value)</h3>
+                    <p>写入单个键值对。</p>
+                    <div class="api-params">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>参数</th>
+                                    <th>类型</th>
+                                    <th>说明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>key</td>
+                                    <td>bytes</td>
+                                    <td>键（字节类型）</td>
+                                </tr>
+                                <tr>
+                                    <td>value</td>
+                                    <td>bytes</td>
+                                    <td>值（字节类型）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="code-example">
+                        <div class="code-block">
+                            <pre><code>db = Database(data_dir=<span class="string">'./data/mydb'</span>)
+db.put(<span class="string">b'key1'</span>, <span class="string">b'value1'</span>)</code></pre>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="api-method">
-                <h3>get(key, version=None)</h3>
-                <p>读取指定键的值。</p>
-                <div class="api-params">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>参数</th>
-                                <th>类型</th>
-                                <th>说明</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>key</td>
-                                <td>bytes</td>
-                                <td>键（字节类型）</td>
-                            </tr>
-                            <tr>
-                                <td>version</td>
-                                <td>int, optional</td>
-                                <td>版本号（None表示最新版本）</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="code-example">
-                    <div class="code-block">
-                        <pre><code>value = db.get(b'key1')
-# 获取指定版本
-value = db.get(b'key1', version=5)</code></pre>
+                <div class="api-method">
+                    <h3>get(key, version=None)</h3>
+                    <p>读取指定键的值。</p>
+                    <div class="api-params">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>参数</th>
+                                    <th>类型</th>
+                                    <th>说明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>key</td>
+                                    <td>bytes</td>
+                                    <td>键（字节类型）</td>
+                                </tr>
+                                <tr>
+                                    <td>version</td>
+                                    <td>int, optional</td>
+                                    <td>版本号（None表示最新版本）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="code-example">
+                        <div class="code-block">
+                            <pre><code>value = db.get(<span class="string">b'key1'</span>)
+<span class="comment"># 获取指定版本</span>
+value = db.get(<span class="string">b'key1'</span>, version=5)</code></pre>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="api-method">
-                <h3>batch_put(items)</h3>
-                <p>批量写入键值对。</p>
-                <div class="api-params">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>参数</th>
-                                <th>类型</th>
-                                <th>说明</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>items</td>
-                                <td>List[Tuple[bytes, bytes]]</td>
-                                <td>键值对列表</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="code-example">
-                    <div class="code-block">
-                        <pre><code>items = [(b'key1', b'value1'), (b'key2', b'value2')]
+                <div class="api-method">
+                    <h3>batch_put(items)</h3>
+                    <p>批量写入键值对。</p>
+                    <div class="api-params">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>参数</th>
+                                    <th>类型</th>
+                                    <th>说明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>items</td>
+                                    <td>List[Tuple[bytes, bytes]]</td>
+                                    <td>键值对列表</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="code-example">
+                        <div class="code-block">
+                            <pre><code>items = [(<span class="string">b'key1'</span>, <span class="string">b'value1'</span>), (<span class="string">b'key2'</span>, <span class="string">b'value2'</span>)]
 success, root_hash = db.batch_put(items)</code></pre>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="api-method">
-                <h3>delete(key)</h3>
-                <p>删除指定键（标记删除）。</p>
-                <div class="code-example">
-                    <div class="code-block">
-                        <pre><code>db.delete(b'key1')</code></pre>
+                <div class="api-method">
+                    <h3>delete(key)</h3>
+                    <p>删除指定键（标记删除）。</p>
+                    <div class="code-example">
+                        <div class="code-block">
+                            <pre><code>db.delete(<span class="string">b'key1'</span>)</code></pre>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="api-method">
-                <h3>flush(force_sync=False)</h3>
-                <p>强制刷新数据到磁盘。</p>
-                <div class="api-params">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>参数</th>
-                                <th>类型</th>
-                                <th>说明</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>force_sync</td>
-                                <td>bool</td>
-                                <td>是否强制同步写入（确保数据持久化）</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="code-example">
-                    <div class="code-block">
-                        <pre><code># 同步刷新，确保数据写入磁盘
+                <div class="api-method">
+                    <h3>flush(force_sync=False)</h3>
+                    <p>强制刷新数据到磁盘。</p>
+                    <div class="api-params">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>参数</th>
+                                    <th>类型</th>
+                                    <th>说明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>force_sync</td>
+                                    <td>bool</td>
+                                    <td>是否强制同步写入（确保数据持久化）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="code-example">
+                        <div class="code-block">
+                            <pre><code><span class="comment"># 同步刷新，确保数据写入磁盘</span>
 db.flush(force_sync=True)</code></pre>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <h2>版本管理</h2>
-            
-            <div class="api-method">
-                <h3>get_version(key, version)</h3>
-                <p>获取指定版本的键值。</p>
-            </div>
-
-            <div class="api-method">
-                <h3>get_at_time(key, timestamp)</h3>
-                <p>获取指定时间点的键值。</p>
-            </div>
-
-            <div class="api-method">
-                <h3>get_history(key, start_version=None, end_version=None)</h3>
-                <p>获取键的版本历史。</p>
-            </div>
-
-            <h2>更多信息</h2>
-            <ul>
-                <li><a href="quickstart.html">快速开始</a></li>
-                <li><a href="integration.html">集成指南</a></li>
-                <li><a href="performance.html">性能优化</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>AmDb</h4>
-                    <p>专为区块链设计的高性能数据库系统</p>
+                <h2>版本管理</h2>
+                
+                <div class="api-method">
+                    <h3>get_version(key, version)</h3>
+                    <p>获取指定版本的键值。</p>
                 </div>
-                <div class="footer-section">
-                    <h4>资源</h4>
-                    <ul>
+
+                <div class="api-method">
+                    <h3>get_at_time(key, timestamp)</h3>
+                    <p>获取指定时间点的键值。</p>
+                </div>
+
+                <div class="api-method">
+                    <h3>get_history(key, start_version=None, end_version=None)</h3>
+                    <p>获取键的版本历史。</p>
+                </div>
+            </div>
+            
+            <div class="doc-nav">
+                <div class="doc-nav-links">
+                    <a href="quickstart.html" class="doc-nav-link">← 快速开始</a>
+                    <a href="integration.html" class="doc-nav-link">→ 集成指南</a>
+                    <a href="performance.html" class="doc-nav-link">→ 性能优化</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4 class="footer-title">AmDb</h4>
+                    <p class="footer-text">专为区块链设计的高性能数据库系统</p>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">资源</h4>
+                    <ul class="footer-links">
                         <li><a href="quickstart.html">快速开始</a></li>
                         <li><a href="api.html">API文档</a></li>
                         <li><a href="../index.html#downloads">下载</a></li>
                         <li><a href="https://github.com/coretrusts/amdb">GitHub</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h4>社区</h4>
-                    <ul>
+                <div class="footer-column">
+                    <h4 class="footer-title">社区</h4>
+                    <ul class="footer-links">
                         <li><a href="https://github.com/coretrusts/amdb/discussions">讨论区</a></li>
                         <li><a href="https://github.com/coretrusts/amdb/issues">问题反馈</a></li>
                         <li><a href="https://github.com/coretrusts/amdb/blob/main/CONTRIBUTING.md">贡献指南</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h4>关于</h4>
-                    <ul>
+                <div class="footer-column">
+                    <h4 class="footer-title">关于</h4>
+                    <ul class="footer-links">
                         <li><a href="https://github.com/coretrusts/amdb/blob/main/LICENSE">许可证</a></li>
                         <li><a href="https://github.com/coretrusts/amdb/releases">更新日志</a></li>
                     </ul>
@@ -303,4 +405,3 @@ db.flush(force_sync=True)</code></pre>
     <script src="../js/main.js"></script>
 </body>
 </html>
-

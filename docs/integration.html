@@ -6,212 +6,338 @@
     <meta name="description" content="AmDb集成指南 - 如何在区块链项目中集成AmDb数据库">
     <title>集成指南 - AmDb</title>
     <link rel="stylesheet" href="../css/style.css">
-    <style>
-        .doc-content {
+        <style>
+        .doc-page {
+            padding: var(--space-3xl) 0;
+            background: var(--bg-primary);
+        }
+        
+        .doc-container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 2rem 0;
+            padding: 0 var(--space-lg);
         }
-        .doc-content h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        
+        .doc-header {
+            margin-bottom: var(--space-2xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 1px solid var(--border-color);
         }
-        .doc-content h2 {
-            font-size: 1.75rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 0.5rem;
+        
+        .doc-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--space-sm);
+            color: var(--text-primary);
+            letter-spacing: -1px;
         }
-        .doc-content h3 {
-            font-size: 1.25rem;
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
+        
+        .doc-intro {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
-        .doc-content p {
-            margin-bottom: 1rem;
+        
+        .doc-content {
             line-height: 1.8;
         }
-        .doc-content ul, .doc-content ol {
-            margin-bottom: 1rem;
-            padding-left: 2rem;
+        
+        .doc-content h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-top: var(--space-2xl);
+            margin-bottom: var(--space-md);
+            color: var(--text-primary);
+            padding-bottom: var(--space-xs);
+            border-bottom: 2px solid var(--border-color);
         }
+        
+        .doc-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: var(--space-xl);
+            margin-bottom: var(--space-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content p {
+            margin-bottom: var(--space-md);
+            color: var(--text-secondary);
+        }
+        
+        .doc-content ul,
+        .doc-content ol {
+            margin-bottom: var(--space-md);
+            padding-left: var(--space-xl);
+            color: var(--text-secondary);
+        }
+        
         .doc-content li {
-            margin-bottom: 0.5rem;
+            margin-bottom: var(--space-xs);
         }
-        .integration-example {
-            background: var(--bg-light);
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid var(--primary-color);
+        
+        .doc-content a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .doc-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .code-block {
+            background: var(--gray-900);
+            border-radius: var(--border-radius);
+            padding: var(--space-lg);
+            margin: var(--space-md) 0;
+            overflow-x: auto;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--gray-100);
+        }
+        
+        .code-block .keyword {
+            color: #c792ea;
+        }
+        
+        .code-block .string {
+            color: #c3e88d;
+        }
+        
+        .code-block .comment {
+            color: var(--gray-500);
+            font-style: italic;
+        }
+        
+        .integration-example,
+        .performance-tip {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-xl);
+            margin-bottom: var(--space-lg);
+            transition: var(--transition);
+        }
+        
+        .integration-example:hover,
+        .performance-tip:hover {
+            box-shadow: var(--shadow-sm);
+            border-color: var(--primary);
+        }
+        
+        .doc-nav {
+            margin-top: var(--space-2xl);
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .doc-nav-links {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        .doc-nav-link {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-sm) var(--space-md);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .doc-nav-link:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
         }
     </style>
 </head>
-<body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <a href="../index.html">
-                    <span class="logo">AmDb</span>
-                    <span class="tagline">高性能区块链数据库</span>
+<body>        <header class="site-header">
+        <div class="header-container">
+            <div class="header-brand">
+                <a href="../index.html" class="brand-link">
+                    <span class="brand-logo">AmDb</span>
                 </a>
             </div>
-            <ul class="nav-menu">
-                <li><a href="../index.html">首页</a></li>
-                <li><a href="../index.html#features">特性</a></li>
-                <li><a href="../index.html#docs" class="active">文档</a></li>
-                <li><a href="../index.html#downloads">下载</a></li>
-                <li><a href="../index.html#community">社区</a></li>
-                <li><a href="https://github.com/coretrusts/amdb" target="_blank">GitHub</a></li>
-            </ul>
-            <button class="nav-toggle" aria-label="Toggle navigation">
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li><a href="../index.html" class="nav-link">首页</a></li>
+                    <li><a href="../index.html#features" class="nav-link">特性</a></li>
+                    <li><a href="../index.html#docs" class="nav-link active">文档</a></li>
+                    <li><a href="../index.html#downloads" class="nav-link">下载</a></li>
+                    <li><a href="https://github.com/coretrusts/amdb" class="nav-link nav-link-external" target="_blank">GitHub</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
         </div>
-    </nav>
+    </header>
 
-    <div class="container">
-        <div class="doc-content">
-            <h1>集成指南</h1>
-            <p>本指南将帮助您将AmDb集成到区块链项目中。</p>
+    <main class="doc-page">
+        <div class="doc-container">
+            <div class="doc-header">
+                <h1 class="doc-title">集成指南</h1>
+                <p class="doc-intro">本指南将帮助您将AmDb集成到区块链项目中。</p>
+            </div>
+            
+            <div class="doc-content">
+                <h2>Python集成</h2>
+                <div class="integration-example">
+                    <h3>基本使用</h3>
+                    <div class="code-block">
+                        <pre><code><span class="keyword">from</span> amdb <span class="keyword">import</span> Database
 
-            <h2>Python集成</h2>
-            <div class="integration-example">
-                <h3>基本使用</h3>
-                <div class="code-block">
-                    <pre><code>from amdb import Database
+<span class="comment"># 创建数据库实例</span>
+db = Database(data_dir=<span class="string">'./data/blockchain_db'</span>)
 
-# 创建数据库实例
-db = Database(data_dir='./data/blockchain_db')
-
-# 存储区块数据
-block_hash = b'block_001'
-block_data = b'{"height": 1, "transactions": [...]}'
+<span class="comment"># 存储区块数据</span>
+block_hash = <span class="string">b'block_001'</span>
+block_data = <span class="string">b'{"height": 1, "transactions": [...]}'</span>
 db.put(block_hash, block_data)
 
-# 存储账户状态
-account_key = b'account:0x1234'
-account_data = b'{"balance": 1000, "nonce": 5}'
+<span class="comment"># 存储账户状态</span>
+account_key = <span class="string">b'account:0x1234'</span>
+account_data = <span class="string">b'{"balance": 1000, "nonce": 5}'</span>
 db.put(account_key, account_data)</code></pre>
+                    </div>
                 </div>
-            </div>
 
-            <h2>批量操作</h2>
-            <div class="integration-example">
-                <h3>批量写入交易</h3>
-                <div class="code-block">
-                    <pre><code># 批量写入交易数据
+                <h2>批量操作</h2>
+                <div class="integration-example">
+                    <h3>批量写入交易</h3>
+                    <div class="code-block">
+                        <pre><code><span class="comment"># 批量写入交易数据</span>
 transactions = [
-    (b'tx:001', b'{"from": "0x1234", "to": "0x5678", "value": 100}'),
-    (b'tx:002', b'{"from": "0x5678", "to": "0x9abc", "value": 50}'),
+    (<span class="string">b'tx:001'</span>, <span class="string">b'{"from": "0x1234", "to": "0x5678", "value": 100}'</span>),
+    (<span class="string">b'tx:002'</span>, <span class="string">b'{"from": "0x5678", "to": "0x9abc", "value": 50}'</span>),
 ]
 
 success, root_hash = db.batch_put(transactions)
 
-# 刷新到磁盘
+<span class="comment"># 刷新到磁盘</span>
 db.flush(force_sync=True)</code></pre>
+                    </div>
                 </div>
-            </div>
 
-            <h2>版本管理</h2>
-            <div class="integration-example">
-                <h3>状态快照</h3>
-                <div class="code-block">
-                    <pre><code># 获取账户状态历史
-history = db.version_manager.get_history(b'account:0x1234')
+                <h2>版本管理</h2>
+                <div class="integration-example">
+                    <h3>状态快照</h3>
+                    <div class="code-block">
+                        <pre><code><span class="comment"># 获取账户状态历史</span>
+history = db.version_manager.get_history(<span class="string">b'account:0x1234'</span>)
 
-# 获取特定时间点的状态
-state = db.get_at_time(b'account:0x1234', timestamp=1234567890)</code></pre>
+<span class="comment"># 获取特定时间点的状态</span>
+state = db.get_at_time(<span class="string">b'account:0x1234'</span>, timestamp=1234567890)</code></pre>
+                    </div>
                 </div>
-            </div>
 
-            <h2>多语言绑定</h2>
-            <h3>Go语言</h3>
-            <div class="code-block">
-                <pre><code>import "github.com/coretrusts/amdb/bindings/go"
-
-db := amdb.NewDatabase("./data/blockchain_db")
-db.Put([]byte("key"), []byte("value"))
-value := db.Get([]byte("key"))</code></pre>
-            </div>
-
-            <h3>Node.js</h3>
-            <div class="code-block">
-                <pre><code>const amdb = require('@coretrusts/amdb');
-
-const db = new amdb.Database('./data/blockchain_db');
-db.put(Buffer.from('key'), Buffer.from('value'));
-const value = db.get(Buffer.from('key'));</code></pre>
-            </div>
-
-            <h2>网络服务模式</h2>
-            <div class="integration-example">
-                <h3>启动服务器</h3>
+                <h2>多语言绑定</h2>
+                <h3>Go语言</h3>
                 <div class="code-block">
-                    <pre><code># 启动AmDb服务器
+                    <pre><code><span class="keyword">import</span> <span class="string">"github.com/coretrusts/amdb/bindings/go"</span>
+
+db := amdb.NewDatabase(<span class="string">"./data/blockchain_db"</span>)
+db.Put([]byte(<span class="string">"key"</span>), []byte(<span class="string">"value"</span>))
+value := db.Get([]byte(<span class="string">"key"</span>))</code></pre>
+                </div>
+
+                <h3>Node.js</h3>
+                <div class="code-block">
+                    <pre><code><span class="keyword">const</span> amdb = require(<span class="string">'@coretrusts/amdb'</span>);
+
+<span class="keyword">const</span> db = <span class="keyword">new</span> amdb.Database(<span class="string">'./data/blockchain_db'</span>);
+db.put(Buffer.from(<span class="string">'key'</span>), Buffer.from(<span class="string">'value'</span>));
+<span class="keyword">const</span> value = db.get(Buffer.from(<span class="string">'key'</span>));</code></pre>
+                </div>
+
+                <h2>网络服务模式</h2>
+                <div class="integration-example">
+                    <h3>启动服务器</h3>
+                    <div class="code-block">
+                        <pre><code><span class="comment"># 启动AmDb服务器</span>
 amdb-server --host 0.0.0.0 --port 3888</code></pre>
+                    </div>
+                </div>
+
+                <div class="integration-example">
+                    <h3>客户端连接</h3>
+                    <div class="code-block">
+                        <pre><code><span class="keyword">from</span> amdb.network <span class="keyword">import</span> RemoteDatabase
+
+<span class="comment"># 连接到远程数据库</span>
+db = RemoteDatabase(host=<span class="string">'localhost'</span>, port=3888, db_name=<span class="string">'blockchain_db'</span>)
+db.put(<span class="string">b'key'</span>, <span class="string">b'value'</span>)</code></pre>
+                    </div>
+                </div>
+
+                <h2>最佳实践</h2>
+                <ul>
+                    <li>使用批量写入提升性能</li>
+                    <li>定期调用flush()确保数据持久化</li>
+                    <li>使用版本管理实现状态回滚</li>
+                    <li>合理配置批量大小和内存限制</li>
+                </ul>
+
+                <h2>更多信息</h2>
+                <ul>
+                    <li><a href="quickstart.html">快速开始</a></li>
+                    <li><a href="api.html">API文档</a></li>
+                    <li><a href="performance.html">性能优化</a></li>
+                </ul>
+            </div>
+            
+            <div class="doc-nav">
+                <div class="doc-nav-links">
+                    <a href="quickstart.html" class="doc-nav-link">← 快速开始</a>
+                    <a href="api.html" class="doc-nav-link">← API参考</a>
+                    <a href="performance.html" class="doc-nav-link">→ 性能优化</a>
                 </div>
             </div>
-
-            <div class="integration-example">
-                <h3>客户端连接</h3>
-                <div class="code-block">
-                    <pre><code>from amdb.network import RemoteDatabase
-
-# 连接到远程数据库
-db = RemoteDatabase(host='localhost', port=3888, db_name='blockchain_db')
-db.put(b'key', b'value')</code></pre>
-                </div>
-            </div>
-
-            <h2>最佳实践</h2>
-            <ul>
-                <li>使用批量写入提升性能</li>
-                <li>定期调用flush()确保数据持久化</li>
-                <li>使用版本管理实现状态回滚</li>
-                <li>合理配置批量大小和内存限制</li>
-            </ul>
-
-            <h2>更多信息</h2>
-            <ul>
-                <li><a href="quickstart.html">快速开始</a></li>
-                <li><a href="api.html">API文档</a></li>
-                <li><a href="performance.html">性能优化</a></li>
-            </ul>
         </div>
-    </div>
+    </main>
 
-    <footer class="footer">
-        <div class="container">
+        <footer class="site-footer">
+        <div class="footer-container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h4>AmDb</h4>
-                    <p>专为区块链设计的高性能数据库系统</p>
+                <div class="footer-column">
+                    <h4 class="footer-title">AmDb</h4>
+                    <p class="footer-text">专为区块链设计的高性能数据库系统</p>
                 </div>
-                <div class="footer-section">
-                    <h4>资源</h4>
-                    <ul>
+                <div class="footer-column">
+                    <h4 class="footer-title">资源</h4>
+                    <ul class="footer-links">
                         <li><a href="quickstart.html">快速开始</a></li>
                         <li><a href="api.html">API文档</a></li>
                         <li><a href="../index.html#downloads">下载</a></li>
                         <li><a href="https://github.com/coretrusts/amdb">GitHub</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h4>社区</h4>
-                    <ul>
+                <div class="footer-column">
+                    <h4 class="footer-title">社区</h4>
+                    <ul class="footer-links">
                         <li><a href="https://github.com/coretrusts/amdb/discussions">讨论区</a></li>
                         <li><a href="https://github.com/coretrusts/amdb/issues">问题反馈</a></li>
                         <li><a href="https://github.com/coretrusts/amdb/blob/main/CONTRIBUTING.md">贡献指南</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h4>关于</h4>
-                    <ul>
+                <div class="footer-column">
+                    <h4 class="footer-title">关于</h4>
+                    <ul class="footer-links">
                         <li><a href="https://github.com/coretrusts/amdb/blob/main/LICENSE">许可证</a></li>
                         <li><a href="https://github.com/coretrusts/amdb/releases">更新日志</a></li>
                     </ul>
@@ -222,8 +348,6 @@ db.put(b'key', b'value')</code></pre>
             </div>
         </div>
     </footer>
-
-    <script src="../js/main.js"></script>
 </body>
 </html>
 
