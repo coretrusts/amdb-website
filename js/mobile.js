@@ -22,25 +22,48 @@
         const nav = document.querySelector('.header-nav');
         const navList = document.querySelector('.nav-list');
         
-        if (!toggle || !nav) return;
+        console.log('初始化移动端菜单:', { toggle, nav, navList });
+        
+        if (!toggle) {
+            console.warn('未找到 .mobile-menu-toggle 元素');
+            return;
+        }
+        
+        if (!nav) {
+            console.warn('未找到 .header-nav 元素');
+            return;
+        }
         
         // 确保菜单初始状态是隐藏的
         if (window.innerWidth <= 768) {
             nav.style.maxHeight = '0';
+            nav.style.overflow = 'hidden';
         }
         
+        // 绑定点击事件
         toggle.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
-            nav.classList.toggle('active');
-            toggle.classList.toggle('active');
+            console.log('菜单按钮被点击');
             
-            if (nav.classList.contains('active')) {
-                nav.style.maxHeight = nav.scrollHeight + 'px';
-            } else {
+            const isActive = nav.classList.contains('active');
+            
+            if (isActive) {
+                // 关闭菜单
+                nav.classList.remove('active');
+                toggle.classList.remove('active');
                 nav.style.maxHeight = '0';
+                nav.style.overflow = 'hidden';
+            } else {
+                // 打开菜单
+                nav.classList.add('active');
+                toggle.classList.add('active');
+                nav.style.maxHeight = nav.scrollHeight + 'px';
+                nav.style.overflow = 'visible';
             }
+            
+            console.log('菜单状态:', nav.classList.contains('active'));
         });
         
         // 点击菜单项后关闭菜单
@@ -50,6 +73,7 @@
                     nav.classList.remove('active');
                     toggle.classList.remove('active');
                     nav.style.maxHeight = '0';
+                    nav.style.overflow = 'hidden';
                 }
             });
         }
@@ -63,6 +87,7 @@
                 nav.classList.remove('active');
                 toggle.classList.remove('active');
                 nav.style.maxHeight = '0';
+                nav.style.overflow = 'hidden';
             }
         });
         
@@ -75,9 +100,11 @@
                     nav.classList.remove('active');
                     toggle.classList.remove('active');
                     nav.style.maxHeight = '';
+                    nav.style.overflow = '';
                 } else {
                     if (!nav.classList.contains('active')) {
                         nav.style.maxHeight = '0';
+                        nav.style.overflow = 'hidden';
                     }
                 }
             }, 250);
