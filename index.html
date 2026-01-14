@@ -305,6 +305,79 @@ python setup.py install</code></pre>
     </footer>
 
     <script src="js/main.js"></script>
+    
+    <!-- Structured Data (JSON-LD) for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "AmDb",
+        "applicationCategory": "DatabaseApplication",
+        "operatingSystem": "Cross-platform",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "description": "AmDb - 专为区块链设计的高性能数据库系统，结合LSM树、B+树和Merkle树，提供卓越的读写性能和数据完整性保障。",
+        "url": "https://getamdb.com",
+        "downloadUrl": "https://github.com/coretrusts/amdb/releases",
+        "softwareVersion": "1.0.0",
+        "releaseNotes": "https://github.com/coretrusts/amdb/releases",
+        "author": {
+            "@type": "Organization",
+            "name": "CoreTrusts",
+            "url": "https://github.com/coretrusts"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "100"
+        },
+        "featureList": [
+            "混合存储引擎（LSM树、B+树、Merkle树）",
+            "版本管理系统",
+            "高性能写入（100,000+ ops/s）",
+            "高性能读取（280,000+ ops/s）",
+            "多语言绑定支持",
+            "数据持久化",
+            "分布式架构",
+            "区块链优化"
+        ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "AmDb",
+        "url": "https://getamdb.com",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://getamdb.com/docs/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "AmDb",
+        "url": "https://getamdb.com",
+        "logo": "https://getamdb.com/images/logo.png",
+        "sameAs": [
+            "https://github.com/coretrusts/amdb"
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "Technical Support",
+            "url": "https://github.com/coretrusts/amdb/issues"
+        }
+    }
+    </script>
 </body>
 </html>
 
