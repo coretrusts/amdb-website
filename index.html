@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AmDb - 专为区块链设计的高性能数据库系统，结合LSM树、B+树和Merkle树，提供卓越的读写性能和数据完整性保障">
+    <meta name="keywords" content="AmDb,数据库,区块链数据库,高性能数据库,LSM树,Merkle树">
+    <title>AmDb - 专为区块链设计的高性能数据库</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html">
+                    <span class="logo">AmDb</span>
+                    <span class="tagline">高性能区块链数据库</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">首页</a></li>
+                <li><a href="#features">特性</a></li>
+                <li><a href="#docs">文档</a></li>
+                <li><a href="#downloads">下载</a></li>
+                <li><a href="#community">社区</a></li>
+                <li><a href="https://github.com/coretrusts/amdb" target="_blank">GitHub</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">AmDb</h1>
+                <p class="hero-subtitle">专为区块链设计的高性能数据库系统</p>
+                <p class="hero-description">
+                    结合LSM树、B+树和Merkle树的混合存储引擎，提供卓越的读写性能和数据完整性保障。
+                    支持多语言绑定，轻松集成到您的区块链应用中。
+                </p>
+                <div class="hero-buttons">
+                    <a href="#downloads" class="btn btn-primary">立即下载</a>
+                    <a href="#docs" class="btn btn-secondary">查看文档</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">100K+</div>
+                        <div class="stat-label">ops/s 顺序写入</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">280K+</div>
+                        <div class="stat-label">ops/s 随机读取</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">10+</div>
+                        <div class="stat-label">编程语言支持</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特性区域 -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">核心特性</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">高性能</h3>
+                    <p class="feature-description">
+                        混合存储引擎设计，顺序写入性能超过100,000 ops/s，随机读取性能超过280,000 ops/s
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">数据完整性</h3>
+                    <p class="feature-description">
+                        基于Merkle树的数据完整性验证，确保数据不被篡改，完美适配区块链应用场景
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">版本管理</h3>
+                    <p class="feature-description">
+                        完整的版本历史管理，支持时间点查询和版本回滚，满足区块链状态管理需求
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">多语言支持</h3>
+                    <p class="feature-description">
+                        支持Python、Go、C、C++、Node.js、PHP、Rust、Java、Swift、Ruby、Kotlin等10+种编程语言
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3 class="feature-title">数据持久化</h3>
+                    <p class="feature-description">
+                        完整的数据持久化机制，支持WAL日志、SSTable、B+树等多种存储格式，确保数据安全
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3 class="feature-title">易于集成</h3>
+                    <p class="feature-description">
+                        提供CLI工具、GUI管理器、REST API和网络服务，支持多种使用方式，轻松集成到现有系统
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术架构 -->
+    <section class="architecture">
+        <div class="container">
+            <h2 class="section-title">技术架构</h2>
+            <div class="architecture-content">
+                <div class="architecture-diagram">
+                    <div class="arch-layer">
+                        <h3>应用层</h3>
+                        <p>CLI工具、GUI管理器、REST API、多语言绑定</p>
+                    </div>
+                    <div class="arch-layer">
+                        <h3>存储引擎层</h3>
+                        <div class="arch-components">
+                            <div class="arch-component">LSM树（写优化）</div>
+                            <div class="arch-component">B+树（读优化）</div>
+                            <div class="arch-component">Merkle树（完整性）</div>
+                        </div>
+                    </div>
+                    <div class="arch-layer">
+                        <h3>数据持久化层</h3>
+                        <p>WAL日志、SSTable、版本文件、索引文件</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 下载区域 -->
+    <section id="downloads" class="downloads">
+        <div class="container">
+            <h2 class="section-title">下载安装</h2>
+            <div class="download-content">
+                <div class="download-platforms">
+                    <div class="platform-card">
+                        <div class="platform-icon">🍎</div>
+                        <h3>macOS</h3>
+                        <p>支持 Intel 和 Apple Silicon</p>
+                        <a href="downloads/amdb-macos.dmg" class="btn btn-download">下载 DMG</a>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-icon">🪟</div>
+                        <h3>Windows</h3>
+                        <p>Windows 10/11 (64-bit)</p>
+                        <a href="downloads/amdb-windows.exe" class="btn btn-download">下载 EXE</a>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-icon">🐧</div>
+                        <h3>Linux</h3>
+                        <p>Ubuntu, Debian, CentOS, RHEL</p>
+                        <a href="downloads/amdb-linux.tar.gz" class="btn btn-download">下载 TAR.GZ</a>
+                    </div>
+                </div>
+                <div class="install-instructions">
+                    <h3>快速安装</h3>
+                    <div class="code-block">
+                        <pre><code># 使用 pip 安装
+pip install amdb
+
+# 或从源码安装
+git clone https://github.com/coretrusts/amdb.git
+cd amdb
+python setup.py install</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 文档区域 -->
+    <section id="docs" class="docs">
+        <div class="container">
+            <h2 class="section-title">文档</h2>
+            <div class="docs-grid">
+                <div class="doc-card">
+                    <h3>快速开始</h3>
+                    <p>5分钟快速上手AmDb，创建您的第一个数据库</p>
+                    <a href="docs/quickstart.html" class="doc-link">阅读文档 →</a>
+                </div>
+                <div class="doc-card">
+                    <h3>API参考</h3>
+                    <p>完整的API文档，包含所有方法和参数说明</p>
+                    <a href="docs/api.html" class="doc-link">阅读文档 →</a>
+                </div>
+                <div class="doc-card">
+                    <h3>集成指南</h3>
+                    <p>如何在您的区块链项目中集成AmDb</p>
+                    <a href="docs/integration.html" class="doc-link">阅读文档 →</a>
+                </div>
+                <div class="doc-card">
+                    <h3>性能优化</h3>
+                    <p>性能调优指南和最佳实践</p>
+                    <a href="docs/performance.html" class="doc-link">阅读文档 →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 社区区域 -->
+    <section id="community" class="community">
+        <div class="container">
+            <h2 class="section-title">社区</h2>
+            <div class="community-content">
+                <div class="community-links">
+                    <a href="https://github.com/coretrusts/amdb" class="community-link" target="_blank">
+                        <div class="community-icon">📦</div>
+                        <h3>GitHub</h3>
+                        <p>查看源代码、提交Issue、参与贡献</p>
+                    </a>
+                    <a href="https://github.com/coretrusts/amdb/discussions" class="community-link" target="_blank">
+                        <div class="community-icon">💬</div>
+                        <h3>讨论区</h3>
+                        <p>与其他开发者交流使用经验</p>
+                    </a>
+                    <a href="https://github.com/coretrusts/amdb/issues" class="community-link" target="_blank">
+                        <div class="community-icon">🐛</div>
+                        <h3>问题反馈</h3>
+                        <p>报告Bug或提出功能建议</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>AmDb</h4>
+                    <p>专为区块链设计的高性能数据库系统</p>
+                </div>
+                <div class="footer-section">
+                    <h4>资源</h4>
+                    <ul>
+                        <li><a href="docs/quickstart.html">快速开始</a></li>
+                        <li><a href="docs/api.html">API文档</a></li>
+                        <li><a href="#downloads">下载</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>社区</h4>
+                    <ul>
+                        <li><a href="https://github.com/coretrusts/amdb/discussions">讨论区</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/issues">问题反馈</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/blob/main/CONTRIBUTING.md">贡献指南</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>关于</h4>
+                    <ul>
+                        <li><a href="https://github.com/coretrusts/amdb/blob/main/LICENSE">许可证</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/releases">更新日志</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AmDb. All rights reserved. | Domain: getamdb.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
+

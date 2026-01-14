@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AmDb集成指南 - 如何在区块链项目中集成AmDb数据库">
+    <title>集成指南 - AmDb</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .doc-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        .doc-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .doc-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        .doc-content h3 {
+            font-size: 1.25rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .doc-content p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .doc-content ul, .doc-content ol {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+        }
+        .doc-content li {
+            margin-bottom: 0.5rem;
+        }
+        .integration-example {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <span class="logo">AmDb</span>
+                    <span class="tagline">高性能区块链数据库</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../index.html#features">特性</a></li>
+                <li><a href="../index.html#docs" class="active">文档</a></li>
+                <li><a href="../index.html#downloads">下载</a></li>
+                <li><a href="../index.html#community">社区</a></li>
+                <li><a href="https://github.com/coretrusts/amdb" target="_blank">GitHub</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="doc-content">
+            <h1>集成指南</h1>
+            <p>本指南将帮助您将AmDb集成到区块链项目中。</p>
+
+            <h2>Python集成</h2>
+            <div class="integration-example">
+                <h3>基本使用</h3>
+                <div class="code-block">
+                    <pre><code>from amdb import Database
+
+# 创建数据库实例
+db = Database(data_dir='./data/blockchain_db')
+
+# 存储区块数据
+block_hash = b'block_001'
+block_data = b'{"height": 1, "transactions": [...]}'
+db.put(block_hash, block_data)
+
+# 存储账户状态
+account_key = b'account:0x1234'
+account_data = b'{"balance": 1000, "nonce": 5}'
+db.put(account_key, account_data)</code></pre>
+                </div>
+            </div>
+
+            <h2>批量操作</h2>
+            <div class="integration-example">
+                <h3>批量写入交易</h3>
+                <div class="code-block">
+                    <pre><code># 批量写入交易数据
+transactions = [
+    (b'tx:001', b'{"from": "0x1234", "to": "0x5678", "value": 100}'),
+    (b'tx:002', b'{"from": "0x5678", "to": "0x9abc", "value": 50}'),
+]
+
+success, root_hash = db.batch_put(transactions)
+
+# 刷新到磁盘
+db.flush(force_sync=True)</code></pre>
+                </div>
+            </div>
+
+            <h2>版本管理</h2>
+            <div class="integration-example">
+                <h3>状态快照</h3>
+                <div class="code-block">
+                    <pre><code># 获取账户状态历史
+history = db.version_manager.get_history(b'account:0x1234')
+
+# 获取特定时间点的状态
+state = db.get_at_time(b'account:0x1234', timestamp=1234567890)</code></pre>
+                </div>
+            </div>
+
+            <h2>多语言绑定</h2>
+            <h3>Go语言</h3>
+            <div class="code-block">
+                <pre><code>import "github.com/coretrusts/amdb/bindings/go"
+
+db := amdb.NewDatabase("./data/blockchain_db")
+db.Put([]byte("key"), []byte("value"))
+value := db.Get([]byte("key"))</code></pre>
+            </div>
+
+            <h3>Node.js</h3>
+            <div class="code-block">
+                <pre><code>const amdb = require('@coretrusts/amdb');
+
+const db = new amdb.Database('./data/blockchain_db');
+db.put(Buffer.from('key'), Buffer.from('value'));
+const value = db.get(Buffer.from('key'));</code></pre>
+            </div>
+
+            <h2>网络服务模式</h2>
+            <div class="integration-example">
+                <h3>启动服务器</h3>
+                <div class="code-block">
+                    <pre><code># 启动AmDb服务器
+amdb-server --host 0.0.0.0 --port 3888</code></pre>
+                </div>
+            </div>
+
+            <div class="integration-example">
+                <h3>客户端连接</h3>
+                <div class="code-block">
+                    <pre><code>from amdb.network import RemoteDatabase
+
+# 连接到远程数据库
+db = RemoteDatabase(host='localhost', port=3888, db_name='blockchain_db')
+db.put(b'key', b'value')</code></pre>
+                </div>
+            </div>
+
+            <h2>最佳实践</h2>
+            <ul>
+                <li>使用批量写入提升性能</li>
+                <li>定期调用flush()确保数据持久化</li>
+                <li>使用版本管理实现状态回滚</li>
+                <li>合理配置批量大小和内存限制</li>
+            </ul>
+
+            <h2>更多信息</h2>
+            <ul>
+                <li><a href="quickstart.html">快速开始</a></li>
+                <li><a href="api.html">API文档</a></li>
+                <li><a href="performance.html">性能优化</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>AmDb</h4>
+                    <p>专为区块链设计的高性能数据库系统</p>
+                </div>
+                <div class="footer-section">
+                    <h4>资源</h4>
+                    <ul>
+                        <li><a href="quickstart.html">快速开始</a></li>
+                        <li><a href="api.html">API文档</a></li>
+                        <li><a href="../index.html#downloads">下载</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>社区</h4>
+                    <ul>
+                        <li><a href="https://github.com/coretrusts/amdb/discussions">讨论区</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/issues">问题反馈</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/blob/main/CONTRIBUTING.md">贡献指南</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>关于</h4>
+                    <ul>
+                        <li><a href="https://github.com/coretrusts/amdb/blob/main/LICENSE">许可证</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/releases">更新日志</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AmDb. All rights reserved. | Domain: getamdb.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
+

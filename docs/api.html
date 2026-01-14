@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AmDb API参考文档 - 完整的API方法和参数说明">
+    <title>API参考 - AmDb</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .doc-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        .doc-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .doc-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        .doc-content h3 {
+            font-size: 1.25rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .doc-content p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .api-method {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        .api-method h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        .api-params {
+            margin-top: 1rem;
+        }
+        .api-params table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+        .api-params th,
+        .api-params td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .api-params th {
+            background: var(--bg-light);
+            font-weight: 600;
+        }
+        .code-example {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <span class="logo">AmDb</span>
+                    <span class="tagline">高性能区块链数据库</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../index.html#features">特性</a></li>
+                <li><a href="../index.html#docs" class="active">文档</a></li>
+                <li><a href="../index.html#downloads">下载</a></li>
+                <li><a href="../index.html#community">社区</a></li>
+                <li><a href="https://github.com/coretrusts/amdb" target="_blank">GitHub</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="doc-content">
+            <h1>API参考</h1>
+            <p>AmDb数据库系统的完整API参考文档。</p>
+
+            <h2>Database类</h2>
+            
+            <div class="api-method">
+                <h3>put(key, value)</h3>
+                <p>写入单个键值对。</p>
+                <div class="api-params">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>参数</th>
+                                <th>类型</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>key</td>
+                                <td>bytes</td>
+                                <td>键（字节类型）</td>
+                            </tr>
+                            <tr>
+                                <td>value</td>
+                                <td>bytes</td>
+                                <td>值（字节类型）</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="code-example">
+                    <div class="code-block">
+                        <pre><code>db = Database(data_dir='./data/mydb')
+db.put(b'key1', b'value1')</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="api-method">
+                <h3>get(key, version=None)</h3>
+                <p>读取指定键的值。</p>
+                <div class="api-params">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>参数</th>
+                                <th>类型</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>key</td>
+                                <td>bytes</td>
+                                <td>键（字节类型）</td>
+                            </tr>
+                            <tr>
+                                <td>version</td>
+                                <td>int, optional</td>
+                                <td>版本号（None表示最新版本）</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="code-example">
+                    <div class="code-block">
+                        <pre><code>value = db.get(b'key1')
+# 获取指定版本
+value = db.get(b'key1', version=5)</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="api-method">
+                <h3>batch_put(items)</h3>
+                <p>批量写入键值对。</p>
+                <div class="api-params">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>参数</th>
+                                <th>类型</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>items</td>
+                                <td>List[Tuple[bytes, bytes]]</td>
+                                <td>键值对列表</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="code-example">
+                    <div class="code-block">
+                        <pre><code>items = [(b'key1', b'value1'), (b'key2', b'value2')]
+success, root_hash = db.batch_put(items)</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="api-method">
+                <h3>delete(key)</h3>
+                <p>删除指定键（标记删除）。</p>
+                <div class="code-example">
+                    <div class="code-block">
+                        <pre><code>db.delete(b'key1')</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="api-method">
+                <h3>flush(force_sync=False)</h3>
+                <p>强制刷新数据到磁盘。</p>
+                <div class="api-params">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>参数</th>
+                                <th>类型</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>force_sync</td>
+                                <td>bool</td>
+                                <td>是否强制同步写入（确保数据持久化）</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="code-example">
+                    <div class="code-block">
+                        <pre><code># 同步刷新，确保数据写入磁盘
+db.flush(force_sync=True)</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <h2>版本管理</h2>
+            
+            <div class="api-method">
+                <h3>get_version(key, version)</h3>
+                <p>获取指定版本的键值。</p>
+            </div>
+
+            <div class="api-method">
+                <h3>get_at_time(key, timestamp)</h3>
+                <p>获取指定时间点的键值。</p>
+            </div>
+
+            <div class="api-method">
+                <h3>get_history(key, start_version=None, end_version=None)</h3>
+                <p>获取键的版本历史。</p>
+            </div>
+
+            <h2>更多信息</h2>
+            <ul>
+                <li><a href="quickstart.html">快速开始</a></li>
+                <li><a href="integration.html">集成指南</a></li>
+                <li><a href="performance.html">性能优化</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>AmDb</h4>
+                    <p>专为区块链设计的高性能数据库系统</p>
+                </div>
+                <div class="footer-section">
+                    <h4>资源</h4>
+                    <ul>
+                        <li><a href="quickstart.html">快速开始</a></li>
+                        <li><a href="api.html">API文档</a></li>
+                        <li><a href="../index.html#downloads">下载</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>社区</h4>
+                    <ul>
+                        <li><a href="https://github.com/coretrusts/amdb/discussions">讨论区</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/issues">问题反馈</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/blob/main/CONTRIBUTING.md">贡献指南</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>关于</h4>
+                    <ul>
+                        <li><a href="https://github.com/coretrusts/amdb/blob/main/LICENSE">许可证</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/releases">更新日志</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AmDb. All rights reserved. | Domain: getamdb.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
+

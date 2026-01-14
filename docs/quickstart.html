@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快速开始 - AmDb</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .doc-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        .doc-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .doc-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        .doc-content h3 {
+            font-size: 1.25rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .doc-content p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .doc-content ul, .doc-content ol {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+        }
+        .doc-content li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <span class="logo">AmDb</span>
+                    <span class="tagline">高性能区块链数据库</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../index.html#features">特性</a></li>
+                <li><a href="../index.html#docs" class="active">文档</a></li>
+                <li><a href="../index.html#downloads">下载</a></li>
+                <li><a href="../index.html#community">社区</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="doc-content">
+            <h1>快速开始</h1>
+            <p>本指南将帮助您在5分钟内开始使用AmDb数据库。</p>
+
+            <h2>安装</h2>
+            <h3>使用 pip 安装</h3>
+            <div class="code-block">
+                <pre><code>pip install amdb</code></pre>
+            </div>
+
+            <h3>从源码安装</h3>
+            <div class="code-block">
+                <pre><code>git clone https://github.com/coretrusts/amdb.git
+cd amdb
+python setup.py install</code></pre>
+            </div>
+
+            <h2>基本使用</h2>
+            <h3>创建数据库</h3>
+            <div class="code-block">
+                <pre><code>from amdb import Database
+
+# 创建数据库实例
+db = Database(data_dir='./data/mydb')
+
+# 写入数据
+db.put(b'key1', b'value1')
+db.put(b'key2', b'value2')
+
+# 读取数据
+value = db.get(b'key1')
+print(value)  # b'value1'
+
+# 批量写入
+items = [(b'key3', b'value3'), (b'key4', b'value4')]
+db.batch_put(items)
+
+# 刷新到磁盘
+db.flush()</code></pre>
+            </div>
+
+            <h2>使用CLI工具</h2>
+            <div class="code-block">
+                <pre><code># 启动CLI
+amdb-cli
+
+# 在CLI中
+amdb> connect mydb
+amdb [mydb]> put key1 value1
+amdb [mydb]> get key1
+amdb [mydb]> show keys</code></pre>
+            </div>
+
+            <h2>下一步</h2>
+            <ul>
+                <li><a href="api.html">查看API文档</a></li>
+                <li><a href="integration.html">了解如何集成到区块链项目</a></li>
+                <li><a href="performance.html">性能优化指南</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>AmDb</h4>
+                    <p>专为区块链设计的高性能数据库系统</p>
+                </div>
+                <div class="footer-section">
+                    <h4>资源</h4>
+                    <ul>
+                        <li><a href="quickstart.html">快速开始</a></li>
+                        <li><a href="api.html">API文档</a></li>
+                        <li><a href="../index.html#downloads">下载</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>社区</h4>
+                    <ul>
+                        <li><a href="https://github.com/coretrusts/amdb/discussions">讨论区</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/issues">问题反馈</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/blob/main/CONTRIBUTING.md">贡献指南</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>关于</h4>
+                    <ul>
+                        <li><a href="https://github.com/coretrusts/amdb/blob/main/LICENSE">许可证</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/releases">更新日志</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AmDb. All rights reserved. | Domain: getamdb.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
+
