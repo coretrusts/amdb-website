@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AmDb使用示例 - 代码示例和最佳实践">
+    <title>使用示例 - AmDb</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .examples-page {
+            padding: var(--space-3xl) 0;
+            background: var(--bg-primary);
+        }
+        
+        .examples-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+        
+        .examples-header {
+            margin-bottom: var(--space-2xl);
+            text-align: center;
+        }
+        
+        .examples-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--space-sm);
+            color: var(--text-primary);
+            letter-spacing: -1px;
+        }
+        
+        .examples-intro {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-xl);
+            margin-top: var(--space-2xl);
+        }
+        
+        .example-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-xl);
+            transition: var(--transition);
+        }
+        
+        .example-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+        }
+        
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-md);
+        }
+        
+        .example-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-light);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .example-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .example-desc {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-md);
+            line-height: 1.6;
+        }
+        
+        .example-code {
+            background: var(--gray-900);
+            border-radius: var(--border-radius);
+            padding: var(--space-lg);
+            overflow-x: auto;
+            margin-bottom: var(--space-md);
+        }
+        
+        .example-code pre {
+            margin: 0;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--gray-100);
+        }
+        
+        .example-code .keyword {
+            color: #c792ea;
+        }
+        
+        .example-code .string {
+            color: #c3e88d;
+        }
+        
+        .example-code .comment {
+            color: var(--gray-500);
+            font-style: italic;
+        }
+        
+        .example-code .function {
+            color: #82aaff;
+        }
+        
+        .example-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        
+        .example-link:hover {
+            text-decoration: underline;
+        }
+        
+        .examples-nav {
+            margin-top: var(--space-2xl);
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+        
+        .examples-nav-links {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .examples-nav-link {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-sm) var(--space-md);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .examples-nav-link:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-brand">
+                <a href="index.html" class="brand-link">
+                    <span class="brand-logo">AmDb</span>
+                </a>
+            </div>
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">首页</a></li>
+                    <li><a href="index.html#features" class="nav-link">特性</a></li>
+                    <li><a href="index.html#docs" class="nav-link">文档</a></li>
+                    <li><a href="examples.html" class="nav-link active">示例</a></li>
+                    <li><a href="index.html#downloads" class="nav-link">下载</a></li>
+                    <li><a href="https://github.com/coretrusts/amdb" class="nav-link nav-link-external" target="_blank">GitHub</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="examples-page">
+        <div class="examples-container">
+            <div class="examples-header">
+                <h1 class="examples-title">使用示例</h1>
+                <p class="examples-intro">通过实际代码示例快速了解如何使用AmDb数据库，涵盖基础操作、区块链应用、批量处理等常见场景。</p>
+            </div>
+            
+            <div class="examples-grid">
+                <!-- 基础使用示例 -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">📝</div>
+                        <h2 class="example-title">基础操作</h2>
+                    </div>
+                    <p class="example-desc">学习如何创建数据库、写入和读取数据的基本操作。</p>
+                    <div class="example-code">
+                        <pre><code><span class="keyword">from</span> amdb <span class="keyword">import</span> Database
+
+<span class="comment"># 创建数据库实例</span>
+db = Database(data_dir=<span class="string">'./data/mydb'</span>)
+
+<span class="comment"># 写入数据</span>
+db.put(<span class="string">b'key1'</span>, <span class="string">b'value1'</span>)
+db.put(<span class="string">b'key2'</span>, <span class="string">b'value2'</span>)
+
+<span class="comment"># 读取数据</span>
+value = db.get(<span class="string">b'key1'</span>)
+<span class="function">print</span>(value)  <span class="comment"># b'value1'</span>
+
+<span class="comment"># 刷新到磁盘</span>
+db.flush()</code></pre>
+                    </div>
+                    <a href="https://github.com/coretrusts/amdb/blob/main/examples/basic_usage.py" class="example-link" target="_blank">
+                        查看完整示例 →
+                    </a>
+                </div>
+
+                <!-- 批量操作示例 -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">⚡</div>
+                        <h2 class="example-title">批量写入</h2>
+                    </div>
+                    <p class="example-desc">使用批量写入提升性能，适合大量数据的场景。</p>
+                    <div class="example-code">
+                        <pre><code><span class="comment"># 准备批量数据</span>
+items = [
+    (<span class="string">b'key1'</span>, <span class="string">b'value1'</span>),
+    (<span class="string">b'key2'</span>, <span class="string">b'value2'</span>),
+    (<span class="string">b'key3'</span>, <span class="string">b'value3'</span>),
+]
+
+<span class="comment"># 批量写入（高性能）</span>
+success, root_hash = db.batch_put(items)
+
+<span class="comment"># 同步刷新</span>
+db.flush(force_sync=True)</code></pre>
+                    </div>
+                    <a href="https://github.com/coretrusts/amdb/blob/main/examples/big_data_example.py" class="example-link" target="_blank">
+                        查看完整示例 →
+                    </a>
+                </div>
+
+                <!-- 区块链应用示例 -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">⛓️</div>
+                        <h2 class="example-title">区块链应用</h2>
+                    </div>
+                    <p class="example-desc">在区块链项目中存储区块、交易和账户状态。</p>
+                    <div class="example-code">
+                        <pre><code><span class="comment"># 存储区块数据</span>
+block_hash = <span class="string">b'block_001'</span>
+block_data = <span class="string">b'{"height": 1, "transactions": [...]}'</span>
+db.put(block_hash, block_data)
+
+<span class="comment"># 存储账户状态</span>
+account_key = <span class="string">b'account:0x1234'</span>
+account_data = <span class="string">b'{"balance": 1000, "nonce": 5}'</span>
+db.put(account_key, account_data)
+
+<span class="comment"># 批量存储交易</span>
+transactions = [(<span class="string">b'tx:001'</span>, tx_data), ...]
+db.batch_put(transactions)</code></pre>
+                    </div>
+                    <a href="https://github.com/coretrusts/amdb/blob/main/examples/blockchain_usage.py" class="example-link" target="_blank">
+                        查看完整示例 →
+                    </a>
+                </div>
+
+                <!-- 版本管理示例 -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">📊</div>
+                        <h2 class="example-title">版本管理</h2>
+                    </div>
+                    <p class="example-desc">使用版本管理功能查询历史数据和状态回滚。</p>
+                    <div class="example-code">
+                        <pre><code><span class="comment"># 获取版本历史</span>
+history = db.version_manager.get_history(<span class="string">b'account:0x1234'</span>)
+
+<span class="comment"># 获取特定版本</span>
+value = db.get_version(<span class="string">b'account:0x1234'</span>, version=5)
+
+<span class="comment"># 时间点查询</span>
+state = db.get_at_time(<span class="string">b'account:0x1234'</span>, 
+                       timestamp=1234567890)</code></pre>
+                    </div>
+                    <a href="https://github.com/coretrusts/amdb/blob/main/examples/blockchain_usage.py" class="example-link" target="_blank">
+                        查看完整示例 →
+                    </a>
+                </div>
+
+                <!-- 多数据库示例 -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">🗄️</div>
+                        <h2 class="example-title">多数据库管理</h2>
+                    </div>
+                    <p class="example-desc">同时管理多个独立的数据库实例。</p>
+                    <div class="example-code">
+                        <pre><code><span class="comment"># 创建多个数据库</span>
+db1 = Database(data_dir=<span class="string">'./data/db1'</span>)
+db2 = Database(data_dir=<span class="string">'./data/db2'</span>)
+
+<span class="comment"># 独立操作</span>
+db1.put(<span class="string">b'key1'</span>, <span class="string">b'value1'</span>)
+db2.put(<span class="string">b'key1'</span>, <span class="string">b'value2'</span>)
+
+<span class="comment"># 数据互不干扰</span>
+<span class="function">print</span>(db1.get(<span class="string">b'key1'</span>))  <span class="comment"># b'value1'</span>
+<span class="function">print</span>(db2.get(<span class="string">b'key1'</span>))  <span class="comment"># b'value2'</span></code></pre>
+                    </div>
+                    <a href="https://github.com/coretrusts/amdb/blob/main/examples/multi_database_example.py" class="example-link" target="_blank">
+                        查看完整示例 →
+                    </a>
+                </div>
+
+                <!-- 网络服务示例 -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">🌐</div>
+                        <h2 class="example-title">远程连接</h2>
+                    </div>
+                    <p class="example-desc">通过网络服务模式连接远程数据库。</p>
+                    <div class="example-code">
+                        <pre><code><span class="keyword">from</span> amdb.network <span class="keyword">import</span> RemoteDatabase
+
+<span class="comment"># 连接到远程数据库</span>
+db = RemoteDatabase(
+    host=<span class="string">'localhost'</span>,
+    port=3888,
+    db_name=<span class="string">'blockchain_db'</span>
+)
+
+<span class="comment"># 远程操作</span>
+db.put(<span class="string">b'key'</span>, <span class="string">b'value'</span>)
+value = db.get(<span class="string">b'key'</span>)</code></pre>
+                    </div>
+                    <a href="https://github.com/coretrusts/amdb/blob/main/examples/blockchain_integration.py" class="example-link" target="_blank">
+                        查看完整示例 →
+                    </a>
+                </div>
+            </div>
+            
+            <div class="examples-nav">
+                <div class="examples-nav-links">
+                    <a href="docs/quickstart.html" class="examples-nav-link">← 快速开始</a>
+                    <a href="docs/api.html" class="examples-nav-link">API参考</a>
+                    <a href="docs/integration.html" class="examples-nav-link">集成指南</a>
+                    <a href="https://github.com/coretrusts/amdb/tree/main/examples" class="examples-nav-link" target="_blank">更多示例 →</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4 class="footer-title">AmDb</h4>
+                    <p class="footer-text">专为区块链设计的高性能数据库系统</p>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">资源</h4>
+                    <ul class="footer-links">
+                        <li><a href="docs/quickstart.html">快速开始</a></li>
+                        <li><a href="docs/api.html">API文档</a></li>
+                        <li><a href="examples.html">使用示例</a></li>
+                        <li><a href="index.html#downloads">下载</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">社区</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/coretrusts/amdb/discussions">讨论区</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/issues">问题反馈</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/blob/main/CONTRIBUTING.md">贡献指南</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">关于</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/coretrusts/amdb/blob/main/LICENSE">许可证</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb-releases">更新日志</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AmDb. All rights reserved. | Domain: getamdb.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
+
