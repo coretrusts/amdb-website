@@ -231,7 +231,7 @@ async function loadAmDbWASM() {
             amdbCode = `
 # AmDb WebAssembly版本（简化实现）
 import json
-from typing import Dict, List, Tuple, Optional, Any
+import hashlib
 
 class DatabaseWASM:
     """AmDb数据库的WebAssembly版本（内存实现）"""
@@ -257,7 +257,6 @@ class DatabaseWASM:
             'timestamp': 0
         })
         
-        import hashlib
         root_hash = hashlib.sha256(f"{key_bytes}:{value_bytes}".encode()).digest()
         return True, root_hash
     
@@ -278,7 +277,6 @@ class DatabaseWASM:
         for key, value in items:
             self.put(key, value)
         
-        import hashlib
         combined = b''.join([(k if isinstance(k, bytes) else k.encode()) + 
                             (v if isinstance(v, bytes) else v.encode()) 
                             for k, v in items])
@@ -312,7 +310,6 @@ class DatabaseWASM:
 
 # 创建别名以便兼容
 Database = DatabaseWASM
-from amdb import Database  # 兼容导入
             `;
         }
         
@@ -329,35 +326,66 @@ import types
 amdb_module = types.ModuleType('amdb')
 amdb_module.DatabaseWASM = DatabaseWASM
 amdb_module.Database = DatabaseWASM
+amdb_module.__all__ = ['DatabaseWASM', 'Database']
 sys.modules['amdb'] = amdb_module
 
 # 为了兼容性，创建全局Database引用
 Database = DatabaseWASM
+
+# 验证模块创建成功
+assert 'amdb' in sys.modules
+assert hasattr(sys.modules['amdb'], 'Database')
         `);
         
     } catch (error) {
         console.warn('加载AmDb WASM失败，使用模拟实现:', error);
-        // 创建模拟的Database类
+        // 创建模拟的Database类和amdb模块
         pyodide.runPython(`
+import sys
+import types
+
 class Database:
     def __init__(self, data_dir=None):
         self.data = {}
-        print("Database initialized (demo mode)")
+        self.versions = {}
+        self.current_version = 0
     
     def put(self, key, value):
-        self.data[key] = value
+        key_bytes = key if isinstance(key, bytes) else key.encode()
+        value_bytes = value if isinstance(value, bytes) else value.encode()
+        self.data[key_bytes] = value_bytes
+        self.current_version += 1
         return True, b'0' * 32
     
     def get(self, key, version=None):
-        return self.data.get(key)
+        key_bytes = key if isinstance(key, bytes) else key.encode()
+        return self.data.get(key_bytes)
     
     def batch_put(self, items):
         for k, v in items:
-            self.data[k] = v
+            self.put(k, v)
         return True, b'0' * 32
     
     def flush(self, force_sync=False):
         return True
+    
+    def get_history(self, key):
+        key_bytes = key if isinstance(key, bytes) else key.encode()
+        return self.versions.get(key_bytes, [])
+    
+    def get_stats(self):
+        return {
+            'total_keys': len(self.data),
+            'current_version': self.current_version,
+            'merkle_root': b'0' * 32
+        }
+
+# 创建amdb模块
+amdb_module = types.ModuleType('amdb')
+amdb_module.Database = Database
+amdb_module.DatabaseWASM = Database
+amdb_module.__all__ = ['Database', 'DatabaseWASM']
+sys.modules['amdb'] = amdb_module
         `);
     }
 }
