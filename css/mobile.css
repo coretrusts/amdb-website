@@ -16,22 +16,25 @@
         width: 100% !important;
         max-height: 0 !important;
         overflow: hidden !important;
-        transition: max-height 0.3s ease, opacity 0.3s ease;
-        opacity: 0;
+        transition: max-height 0.3s ease, opacity 0.3s ease !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
         order: 3;
         position: absolute;
         top: 72px;
         left: 0;
         right: 0;
-        background: var(--bg-primary);
+        background: var(--bg-primary) !important;
         border-bottom: 1px solid var(--border-color);
         box-shadow: var(--shadow-md);
+        z-index: 1000;
     }
     
     .header-nav.active {
-        max-height: 500px !important;
+        max-height: 600px !important;
         overflow: visible !important;
         opacity: 1 !important;
+        visibility: visible !important;
     }
     
     .nav-list {
@@ -60,8 +63,14 @@
         border: none;
         cursor: pointer;
         padding: var(--space-xs);
-        z-index: 1000;
+        z-index: 1001;
         position: relative;
+        pointer-events: auto !important;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .mobile-menu-toggle:active {
+        opacity: 0.7;
     }
     
     .mobile-menu-toggle span {
