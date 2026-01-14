@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AmDb在线演示 - 在浏览器中体验AmDb数据库">
+    <title>在线演示 - AmDb</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css">
+    <style>
+        .demo-page {
+            padding: var(--space-3xl) 0;
+            background: var(--bg-primary);
+            min-height: calc(100vh - 200px);
+        }
+        
+        .demo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+        
+        .demo-header {
+            margin-bottom: var(--space-xl);
+            text-align: center;
+        }
+        
+        .demo-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--space-sm);
+            color: var(--text-primary);
+            letter-spacing: -1px;
+        }
+        
+        .demo-intro {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .demo-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+        
+        .demo-panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .demo-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .demo-panel-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .demo-buttons {
+            display: flex;
+            gap: var(--space-sm);
+        }
+        
+        .demo-btn {
+            padding: var(--space-xs) var(--space-md);
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .demo-btn:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .demo-btn-primary {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .demo-btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        
+        .demo-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .code-editor {
+            flex: 1;
+            min-height: 400px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        .CodeMirror {
+            height: 100%;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+        }
+        
+        .output-panel {
+            flex: 1;
+            min-height: 400px;
+            background: var(--gray-900);
+            border-radius: var(--border-radius);
+            padding: var(--space-md);
+            overflow-y: auto;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--gray-100);
+            line-height: 1.6;
+        }
+        
+        .output-line {
+            margin-bottom: var(--space-xs);
+        }
+        
+        .output-error {
+            color: #ff6b6b;
+        }
+        
+        .output-success {
+            color: #51cf66;
+        }
+        
+        .output-info {
+            color: #74c0fc;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid var(--gray-400);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .demo-examples {
+            margin-top: var(--space-lg);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .example-tabs {
+            display: flex;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        .example-tab {
+            padding: var(--space-xs) var(--space-md);
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+        
+        .example-tab:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .example-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .demo-warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: var(--border-radius);
+            padding: var(--space-md);
+            margin-bottom: var(--space-lg);
+            color: #856404;
+            font-size: 0.875rem;
+        }
+        
+        .demo-warning strong {
+            display: block;
+            margin-bottom: var(--space-xs);
+        }
+        
+        @media (max-width: 1024px) {
+            .demo-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-brand">
+                <a href="index.html" class="brand-link">
+                    <span class="brand-logo">AmDb</span>
+                </a>
+            </div>
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">首页</a></li>
+                    <li><a href="index.html#features" class="nav-link">特性</a></li>
+                    <li><a href="index.html#docs" class="nav-link">文档</a></li>
+                    <li><a href="examples.html" class="nav-link">示例</a></li>
+                    <li><a href="demo.html" class="nav-link active">在线演示</a></li>
+                    <li><a href="index.html#downloads" class="nav-link">下载</a></li>
+                    <li><a href="https://github.com/coretrusts/amdb" class="nav-link nav-link-external" target="_blank">GitHub</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="demo-page">
+        <div class="demo-container">
+            <div class="demo-header">
+                <h1 class="demo-title">在线演示</h1>
+                <p class="demo-intro">在浏览器中直接体验AmDb数据库，无需安装，立即运行代码。</p>
+            </div>
+            
+            <div class="demo-warning">
+                <strong>⚠️ 演示说明</strong>
+                本演示使用Pyodide在浏览器中运行Python代码。由于AmDb核心代码需要编译扩展，完整功能演示需要下载桌面版。这里提供基础功能的概念演示。
+            </div>
+            
+            <div class="demo-layout">
+                <!-- 代码编辑器 -->
+                <div class="demo-panel">
+                    <div class="demo-panel-header">
+                        <h2 class="demo-panel-title">代码编辑器</h2>
+                        <div class="demo-buttons">
+                            <button class="demo-btn" id="clearBtn">清空</button>
+                            <button class="demo-btn demo-btn-primary" id="runBtn">运行</button>
+                        </div>
+                    </div>
+                    <div class="code-editor" id="codeEditor"></div>
+                    <div class="demo-examples">
+                        <div class="example-tabs">
+                            <button class="example-tab active" data-example="basic">基础示例</button>
+                            <button class="example-tab" data-example="batch">批量写入</button>
+                            <button class="example-tab" data-example="blockchain">区块链</button>
+                            <button class="example-tab" data-example="version">版本管理</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 输出面板 -->
+                <div class="demo-panel">
+                    <div class="demo-panel-header">
+                        <h2 class="demo-panel-title">运行结果</h2>
+                        <div class="demo-buttons">
+                            <button class="demo-btn" id="clearOutputBtn">清空输出</button>
+                        </div>
+                    </div>
+                    <div class="output-panel" id="outputPanel">
+                        <div class="output-line output-info">等待运行代码...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4 class="footer-title">AmDb</h4>
+                    <p class="footer-text">专为区块链设计的高性能数据库系统</p>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">资源</h4>
+                    <ul class="footer-links">
+                        <li><a href="docs/quickstart.html">快速开始</a></li>
+                        <li><a href="docs/api.html">API文档</a></li>
+                        <li><a href="examples.html">使用示例</a></li>
+                        <li><a href="index.html#downloads">下载</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">社区</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/coretrusts/amdb/discussions">讨论区</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/issues">问题反馈</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb/blob/main/CONTRIBUTING.md">贡献指南</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">关于</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/coretrusts/amdb/blob/main/LICENSE">许可证</a></li>
+                        <li><a href="https://github.com/coretrusts/amdb-releases">更新日志</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AmDb. All rights reserved. | Domain: getamdb.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+    <script src="js/demo.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+
