@@ -401,8 +401,8 @@ value = db.get(<span class="code-string">b'key1'</span>)</code></pre>
     if (typeof toggleMobileMenu === "undefined") {
         function toggleMobileMenu(e) {
             if (e) { e.preventDefault(); e.stopPropagation(); }
-            const nav = document.querySelector(.header-nav);
-            const toggle = document.querySelector(.mobile-menu-toggle);
+            const nav = document.querySelector(".header-nav");
+            const toggle = document.querySelector(".mobile-menu-toggle");
             if (!nav || !toggle) { console.warn(菜单元素未找到); return; }
             const isActive = nav.classList.contains(active);
             if (isActive) {
@@ -413,7 +413,7 @@ value = db.get(<span class="code-string">b'key1'</span>)</code></pre>
                 const height = nav.scrollHeight || 500;
                 nav.style.maxHeight = height + px; nav.style.overflow = visible; nav.style.opacity = 1; nav.style.visibility = visible;
             }
-            console.log(菜单切换:, nav.classList.contains(active));
+            console.log("菜单切换:", nav.classList.contains(active));
         }
     }
     </script>    <script src="js/mobile.js"></script>    
